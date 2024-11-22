@@ -1,5 +1,5 @@
-import { debounce } from './utilities';
-import {createPicturesArray} from './create-pictures';
+import { debounce } from './utilities.js';
+import {createPicturesArray} from './create-pictures.js';
 
 // набор фильтров
 const FILTERS = {

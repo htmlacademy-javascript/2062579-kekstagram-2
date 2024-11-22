@@ -1,4 +1,4 @@
-import {isEscapeKey} from './utilities';
+import {isEscapeKey} from './utilities.js';
 
 const pageBody = document.body;
 
