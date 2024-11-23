@@ -1,4 +1,4 @@
-import { debounce } from './utilities.js';
+import {debounce} from './utilities.js';
 import {createPicturesArray} from './create-pictures.js';
 
 // набор фильтров

@@ -22,7 +22,12 @@ const textCommentElement = pictureUploadFormElement.querySelector('.text__descri
 const effectListElement = pictureUploadFormElement.querySelector('.effects__list');
 // кнопка отправки формы
 const pictureUploadFormButton = pictureUploadFormElement.querySelector('.img-upload__submit');
-
+// элемент с превью загружаемого фото
+const pictureUploadPreview = pictureUploadFormElement.querySelector('.img-upload__preview > img');
+// элементы превью с эффектами
+const pictureEffectsPreview = pictureUploadFormElement.querySelectorAll('.effects__preview');
+// массив допустимых типов файлов для загрузки
+const FILE_TYPES = ['image/png', 'image/gif', 'image/jpeg'];
 // шаблон сообщения об успешной отправке фото
 const templateSuccessElement = document.querySelector('#success').content;
 // шаблон сообщения об ошибке при отправке фото
@@ -57,6 +62,9 @@ const closePictureUploadForm = () => {
   pictureUploadOverlayElement.classList.add('hidden');
   // сбрасываю значения в форме
   pictureUploadFormElement.reset();
+  // сбрасываю значения полей формы
+  resetEffects();
+  resetScale();
   // удаляю прослушиватель на клавише Esc
   // eslint-disable-next-line no-use-before-define
   document.removeEventListener('keydown', onEscapeKeyDown);
@@ -85,6 +93,29 @@ const openPictureUploadForm = () => {
   pictureUploadCancelElement.addEventListener('click', closePictureUploadForm);
   // вешаю на страницу прослушиваетль на Esc
   document.addEventListener('keydown', onEscapeKeyDown);
+};
+
+// функция подстановки изображения в превью
+const onPhotoUpload = () => {
+  // забираю из инпута загруженный файл
+  const file = pictureUploadFileElement.files[0];
+  // определяю тип файла
+  const fileType = file.type;
+  // задаю проверку по типу файла
+  const matchesTypeFile = FILE_TYPES.includes(fileType);
+  if (matchesTypeFile) { // проверяю
+    // создаю url-адрес для загруженного файла
+    const url = URL.createObjectURL(file);
+    // подставляю его в превьюшку
+    pictureUploadPreview.src = url;
+    // подставляю его же в превьюшки эффектов
+    pictureEffectsPreview.forEach((item) => {
+      item.style.backgroundImage = `url(${url})`;
+    });
+  } else {
+    // если неправильный файл - закрываю окно
+    closePictureUploadForm();
+  }
 };
 
 // функция отправки формы
@@ -126,8 +157,9 @@ pristine.addValidator(inputHashtagsElement, isHashtagsValid, errorHashtagMessage
 // валидация комментария в Pristine
 pristine.addValidator(textCommentElement, validateCommentLength, errorCommentMessage);
 
-// вешаю прослушиватель на инпут загрузки изображения
+// вешаю прослушиватели на инпут загрузки изображения
 pictureUploadFileElement.addEventListener('change', openPictureUploadForm);
+pictureUploadFileElement.addEventListener('change', onPhotoUpload);
 
 // добавляю прослушиватель на форму для отправки
 pictureUploadFormElement.addEventListener('submit', submitPictureUploadForm);

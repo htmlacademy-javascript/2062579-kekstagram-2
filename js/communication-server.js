@@ -3,7 +3,7 @@ const SERVER_URL_DATA = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 // адрес для отправки данных на сервер
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 // методы
-const methods = {
+const methodsType = {
   GET: 'GET',
   POST: 'POST',
 };
@@ -32,8 +32,8 @@ const loader = async (address, method, body) => {
   return response.ok ? await response.json() : Promise.reject();
 };
 // функция получения данных с сервера
-const getServerData = () => loader(SERVER_URL_DATA, methods.GET, null);
+const getServerData = () => loader(SERVER_URL_DATA, methodsType.GET, null);
 // функция отправки данных на сервер
-const postServerData = (body) => loader(BASE_URL, methods.POST, body);
+const postServerData = (body) => loader(BASE_URL, methodsType.POST, body);
 
 export {getServerData, postServerData, showErrorMessage};
