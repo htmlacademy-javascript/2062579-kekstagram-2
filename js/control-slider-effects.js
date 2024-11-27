@@ -31,6 +31,12 @@ effectSliderElement.noUiSlider.on('update', () => {
 // убираю слайдер по умолчанию
 effectLevel.classList.add('hidden');
 
+// функция сброса эффектов на начальное значение
+const resetEffects = () => {
+  imgUploadPreviewElement.style.filter = 'none';
+  effectLevel.classList.add('hidden');
+};
+
 const onEffectChange = (evt) => {
   const effect = evt.target.value;
 
@@ -52,7 +58,7 @@ const onEffectChange = (evt) => {
           min: 0,
           max: 1,
         },
-        start: 0,
+        start: 1,
         step: 0.1,
       });
       effectSliderElement.noUiSlider.on('update', () => {
@@ -66,7 +72,7 @@ const onEffectChange = (evt) => {
           min: 0,
           max: 1,
         },
-        start: 0,
+        start: 1,
         step: 0.1,
       });
       effectSliderElement.noUiSlider.on('update', () => {
@@ -80,7 +86,7 @@ const onEffectChange = (evt) => {
           min: 0,
           max: 100,
         },
-        start: 0,
+        start: 100,
         step: 1,
       });
       effectSliderElement.noUiSlider.on('update', () => {
@@ -94,7 +100,7 @@ const onEffectChange = (evt) => {
           min: 0,
           max: 3,
         },
-        start: 0,
+        start: 3,
         step: 0.1,
       });
       effectSliderElement.noUiSlider.on('update', () => {
@@ -108,19 +114,13 @@ const onEffectChange = (evt) => {
           min: 1,
           max: 3,
         },
-        start: 0,
+        start: 3,
         step: 0.1,
       });
       effectSliderElement.noUiSlider.on('update', () => {
         imgUploadPreviewElement.style.filter = `brightness(${effectLevelValueElement.value})`;
       });
   }
-};
-
-// функция сброса эффектов на начальное значение
-const resetEffects = () => {
-  imgUploadPreviewElement.style.filter = 'none';
-  effectLevel.classList.add('hidden');
 };
 
 export {onEffectChange, resetEffects};

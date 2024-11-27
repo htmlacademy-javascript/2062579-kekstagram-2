@@ -7,7 +7,9 @@ const textCommentElement = pictureUploadFormElement.querySelector('.text__descri
 // содержание комментария
 let textCommentValue = '';
 // сообщение об ошибке
-const errorCommentMessage = 'Длина комментария не более 140 символов';
+const errorTextMessage = 'Длина комментария не более 140 символов';
+
+const errorCommentMessage = () => errorTextMessage;
 // функция проверки длины комментария
 const validateCommentLength = () => HASHTAG_LENGTH >= textCommentValue.length;
 

@@ -20,7 +20,7 @@ const isHashtagsValid = (value) => {
   const inputArray = inputText.split(/\s+/);
 
   // объект с правилами и проверками
-  const rulesObject = [
+  const rulesObjects = [
     {
       check: inputArray.length > HASHTAGS_NUMBER, // проверку на количество хэштегов ставлю первой для лучшего UI
       errorText: `Количество хэштегов не более ${HASHTAGS_NUMBER}`,
@@ -51,7 +51,7 @@ const isHashtagsValid = (value) => {
     }
   ];
 
-  return rulesObject.every((rule) => {
+  return rulesObjects.every((rule) => {
     const notValid = rule.check;
     if(notValid) {
       errorMessage = rule.errorText;

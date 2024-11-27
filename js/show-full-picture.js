@@ -18,7 +18,7 @@ const body = document.querySelector('BODY');
 
 // функция закрывания большой картинки
 const closeBigPicture = () => {
-  //
+  // очищаю блок с комментариями
   deleteShowingComments();
   // скрываю большую картинку
   bigPictureElement.classList.add('hidden');
