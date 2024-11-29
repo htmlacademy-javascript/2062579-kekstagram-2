@@ -1,3 +1,7 @@
+// шаг изменения масштаба
+const SCALE_STEP = 0.25;
+// начальное значение масштаба
+const START_SCALE = 1;
 // кнопка уменьшения масштаба
 const scaleControlSmallerElement = document.querySelector('.scale__control--smaller');
 // кнопка увеличения масштаба
@@ -6,10 +10,6 @@ const scaleControlBiggerElement = document.querySelector('.scale__control--bigge
 const scaleControlValueElement = document.querySelector('.scale__control--value');
 // изображение
 const imgUploadPreviewElement = document.querySelector('.img-upload__preview img');
-// шаг изменения масштаба
-const SCALE_STEP = 0.25;
-// начальное значение масштаба
-const START_SCALE = 1;
 // масштаб
 let scale = 1;
 

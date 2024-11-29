@@ -2,6 +2,8 @@
 const SERVER_URL_DATA = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 // адрес для отправки данных на сервер
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+// время отображения сообщения об ошибке
+const REMOVE_ERROR_MESSAGE_TIMEOUT = 5000;
 // методы
 const MethodsTypes = {
   GET: 'GET',
@@ -10,8 +12,6 @@ const MethodsTypes = {
 // шаблон сообщения об ошибке загрузки данных
 const errorLoadDataTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 const pageBody = document.body;
-// время отображения сообщения об ошибке
-const REMOVE_ERROR_MESSAGE_TIMEOUT = 5000;
 
 // функция отображения сообщения об ошибке
 const showErrorMessage = () => {

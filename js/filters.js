@@ -1,16 +1,16 @@
 import {debounce} from './utilities.js';
 import {createPicturesArray} from './create-pictures.js';
 
+// класс для активного фильтра
+const ACTIVE_FILTER_CLASS = 'img-filters__button--active';
+// количество фото, отбираемых в случайном фильтре
+const RANDOM_PHOTOS_COUNT = 10;
 // набор фильтров
 const Filters = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
-// класс для активного фильтра
-const ACTIVE_FILTER_CLASS = 'img-filters__button--active';
-// количество фото, отбираемых в случайном фильтре
-const RANDOM_PHOTOS_COUNT = 10;
 // нахожу элемент с фильтрами
 const filtersElement = document.querySelector('.img-filters');
 // переменная для текущего фильтра
@@ -37,7 +37,7 @@ const appllyFilter = () => {
   debounceRender(filteredPhotos);
 };
 
-const onfilterChange = (evt) => {
+const onFiltersClick = (evt) => {
   // фильтр, который выбирается кликом
   const targetFilter = evt.target;
   // активный фильтр
@@ -57,13 +57,13 @@ const onfilterChange = (evt) => {
   appllyFilter();
 };
 
-const configFilter = (photosData) => {
+const makeFilter = (photosData) => {
   // отображаю блок фильтров на странице
   filtersElement.classList.remove('img-filters--inactive');
   // подписываю блок на клики
-  filtersElement.addEventListener('click', onfilterChange);
+  filtersElement.addEventListener('click', onFiltersClick);
   // записываю в массив photos полученные с сервера данные
   photos = photosData;
 };
 // экспортирую
-export {configFilter};
+export {makeFilter};

@@ -29,6 +29,9 @@ const closeBigPicture = () => {
   document.removeEventListener('keydown', onEscapeKeyDown);
 };
 
+//
+const onPictureCloseClick = () => closeBigPicture();
+
 // функция закрывания большой картинки нажатием на Esc
 const onEscapeKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -69,7 +72,7 @@ const renderFullPicture = (picturesArray) => {
   });
 
   // закрываю большую картинку кликом по крестику
-  bigPictureCloseElement.addEventListener('click', closeBigPicture);
+  bigPictureCloseElement.addEventListener('click', onPictureCloseClick);
 };
 
 export {renderFullPicture};

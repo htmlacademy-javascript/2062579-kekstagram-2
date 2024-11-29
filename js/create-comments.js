@@ -47,19 +47,21 @@ const createNextShowingComments = () => {
   // обновляю значение текущего счетчика показанных комментариев
   currentCount += NUMBER_COMMENTS;
 };
+//
+const onPictureCommentsLoaderClick = () => createNextShowingComments();
 // функция показа блока комментариев (при открытии большой картинки)
 const createShowingComments = (currentPictureComments) => {
   comments = currentPictureComments;
   createNextShowingComments();
 
-  bigPictureCommentsLoaderElement.addEventListener('click', createNextShowingComments);
+  bigPictureCommentsLoaderElement.addEventListener('click', onPictureCommentsLoaderClick);
 };
 // функция очистки блока комментариев (при закрытии большой картинки)
 const deleteShowingComments = () => {
   currentCount = 0;
   bigPictureCommentsListElement.innerHTML = '';
   bigPictureCommentsLoaderElement.classList.remove('hidden');
-  bigPictureCommentsLoaderElement.removeEventListener('click', createNextShowingComments);
+  bigPictureCommentsLoaderElement.removeEventListener('click', onPictureCommentsLoaderClick);
 };
 
 export {createShowingComments, deleteShowingComments};
