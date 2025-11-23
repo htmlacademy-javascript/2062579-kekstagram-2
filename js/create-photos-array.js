@@ -1,4 +1,4 @@
-import { getRandomNumber, createId } from './utils';
+import { getRandomNumber, createId } from './utils.js';
 import { getDataArrays } from './data.js';
 
 const LIKES_NUMBER = { // количество лайков от мин до макс
