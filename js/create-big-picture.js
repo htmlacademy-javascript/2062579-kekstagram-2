@@ -71,6 +71,9 @@ function manageComments () { // функция управления блоком
     elem.classList.contains('hidden')
   );
   socialCommentShownCount.textContent = 0;
+  if (workArray.length === 0) {
+    commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если нет комментариев
+  }
   for (let i = startElement; i < startElement + NUMBER_OPEN_COMMENTS; i++) { // удаляем с 5 эл-в класс 'hidden' начиная с первого найденного
     if (!workArray[i]) { // завершаем цикл если элементы закончились
       break;
