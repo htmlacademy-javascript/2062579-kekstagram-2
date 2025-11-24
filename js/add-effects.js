@@ -1,11 +1,12 @@
 export const effectLevelSlider = document.querySelector('.effect-level__slider'); // слайдер
+export const effectLevelContainer = document.querySelector('.img-upload__effect-level'); // контейнер слайдера
 export const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
 export const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 export const effectsList = document.querySelector('.effects__list'); // список превьюшек фильтров
 
 export let effectName = 'none'; // имя эффекта для инлайн-стиля
 export let effectParameter = ''; // параметр эффекта для инлайе стиля: px, % или ничего
-effectLevelSlider.classList.add('hidden'); // скрываем слайдер при загрузке
+effectLevelContainer.classList.add('hidden'); // скрываем слайдер при загрузке
 
 noUiSlider.create(effectLevelSlider, { // подключаем слайдер
   range: {
@@ -32,7 +33,7 @@ export const checkEffect = (evt) => { // функция выбора эффек�
         step: 1,
       });
       uploadImagePreview.style.filter = 'none';
-      effectLevelSlider.classList.add('hidden');
+      effectLevelContainer.classList.add('hidden');
       break;
     case 'effect-chrome':
       effectLevelSlider.noUiSlider.updateOptions({
@@ -46,7 +47,7 @@ export const checkEffect = (evt) => { // функция выбора эффек�
       effectName = 'grayscale';
       effectParameter = '';
       uploadImagePreview.style.filter = effectStyle();
-      effectLevelSlider.classList.remove('hidden');
+      effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-sepia':
       effectLevelSlider.noUiSlider.updateOptions({
@@ -60,7 +61,7 @@ export const checkEffect = (evt) => { // функция выбора эффек�
       effectName = 'sepia';
       effectParameter = '';
       uploadImagePreview.style.filter = effectStyle();
-      effectLevelSlider.classList.remove('hidden');
+      effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-marvin':
       effectLevelSlider.noUiSlider.updateOptions({
@@ -74,7 +75,7 @@ export const checkEffect = (evt) => { // функция выбора эффек�
       effectName = 'invert';
       effectParameter = '%';
       uploadImagePreview.style.filter = effectStyle();
-      effectLevelSlider.classList.remove('hidden');
+      effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-phobos':
       effectLevelSlider.noUiSlider.updateOptions({
@@ -88,7 +89,7 @@ export const checkEffect = (evt) => { // функция выбора эффек�
       effectName = 'blur';
       effectParameter = 'px';
       uploadImagePreview.style.filter = effectStyle();
-      effectLevelSlider.classList.remove('hidden');
+      effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-heat':
       effectLevelSlider.noUiSlider.updateOptions({
@@ -102,7 +103,7 @@ export const checkEffect = (evt) => { // функция выбора эффек�
       effectName = 'brightness';
       effectParameter = '';
       uploadImagePreview.style.filter = effectStyle();
-      effectLevelSlider.classList.remove('hidden');
+      effectLevelContainer.classList.remove('hidden');
       break;
   }
 };

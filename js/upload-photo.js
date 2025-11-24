@@ -1,6 +1,6 @@
 import { commentField, hashtagsField, validateUploadPhotoForm, pristine } from './validation-form.js'; // импорт данных валидации полей формы
 import { SCALE_PARAMETERS, scaleControlSmaller, scaleControlBigger, smallPhotoScale, bigPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
-import { effectLevelSlider, uploadImagePreview, effectsList, checkEffect } from './add-effects.js'; // импорт данных работы фильтров
+import { effectLevelContainer, uploadImagePreview, effectsList, checkEffect } from './add-effects.js'; // импорт данных работы фильтров
 
 const BODY = document.querySelector('BODY');
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
@@ -31,7 +31,7 @@ const closeUploadForm = () => { // функция закрытия формы
 
   effectsList.removeEventListener('change', checkEffect); // снятие обработчика выбора фильтров
   uploadImagePreview.removeAttribute('style'); // сброс стилей фильтра
-  effectLevelSlider.classList.add('hidden'); // скрытие слайдера
+  effectLevelContainer.classList.add('hidden'); // скрытие слайдера
 };
 
 function onEscapeDown (evt) { // функция закрытия окна по эскейпу
