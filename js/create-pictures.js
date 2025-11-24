@@ -8,7 +8,7 @@ export const createPictures = (datasArray) => {
     const image = picturesListItem.querySelector('.picture__img');
     image.src = url;
     image.alt = description;
-    image.id = id;
+    image.dataset.id = id;
     const likesNumber = picturesListItem.querySelector('.picture__likes');
     likesNumber.textContent = likes;
     const commentsNumber = picturesListItem.querySelector('.picture__comments');
