@@ -15,25 +15,6 @@ const commentsLoader = bigPicture.querySelector('.comments-loader'); // кноп
 const socialCommentsTemplate = bigPicture.querySelector('.social__comment'); // комментарий в разметке
 const socialCommentsFragment = document.createDocumentFragment(); // фрагмент для комментариев
 
-// const createCommentsListItem = (comment) => { // функция создания комментария
-//   const commentListItem = document.createElement('LI');
-//   commentListItem.classList.add('social__comment', 'hidden');
-
-//   const commentText = document.createElement('P');
-//   commentText.classList.add('social__text');
-//   commentText.textContent = comment.message;
-
-//   const commentAvatar = document.createElement('IMG');
-//   commentAvatar.classList.add('social__picture');
-//   commentAvatar.width = '35';
-//   commentAvatar.height = '35';
-//   commentAvatar.src = comment.avatar;
-//   commentAvatar.alt = comment.name;
-
-//   commentListItem.append(commentAvatar, commentText);
-//   socialComments.append(commentListItem);
-// };
-
 const createCommentsListItem = (comment) => { // функция создания комментария
   const commentListItem = socialCommentsTemplate.cloneNode(true);
   commentListItem.classList.add('hidden');
