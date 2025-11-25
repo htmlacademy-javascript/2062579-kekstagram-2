@@ -51,6 +51,9 @@ function manageComments () { // функция управления блоком
   const startElement = workArray.findIndex((elem) => // находим, какой первый элемент с классом 'hidden'
     elem.classList.contains('hidden')
   );
+  if (workArray.length === 0) {
+    commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если нет комментариев
+  }
   socialCommentShownCount.textContent = 0;
   for (let i = startElement; i < startElement + NUMBER_OPEN_COMMENTS; i++) { // удаляем с 5 эл-в класс 'hidden' начиная с первого найденного
     if (!workArray[i]) { // завершаем цикл если элементы закончились
