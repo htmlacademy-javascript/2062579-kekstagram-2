@@ -1,4 +1,3 @@
-import { createPhotosArray } from './create-photos-array.js'; // импорт функции, генерирующей моковые данные
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { picturesContainer, openBigPicture } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
 import { uploadImageInput, openUploadForm } from './upload-photo.js'; // импорт функции загрузки изображения
@@ -6,10 +5,16 @@ import { MAX_COMMENT_LENGTH, commentField, hashtagsField, pristine, validateComm
 import { effectLevelSlider, effectLevelValue, uploadImagePreview, effectStyle } from './add-effects.js';
 
 /* формируем объект с моковыми данными */
-const photosArray = createPhotosArray();
+// const photosArray = createPhotosArray();
+let photosArray = [];
 
-/* отрисовываем изображения */
-createPictures(photosArray);
+/* загрузка данных с сервера */
+fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
+  .then((response) => response.json())
+  .then((data) => {
+    photosArray = data;
+    createPictures(data); // отрисовываем изображения
+  });
 
 /* открываем большое фото */
 picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, photosArray));

@@ -98,7 +98,7 @@ export const openBigPicture = (evt, array) => { // функция открыти
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно
 
-    const index = evt.target.dataset.id - 1; // определяем какой индекс у элемента, по которому кликнули, в объекте
+    const index = evt.target.dataset.id; // определяем какой индекс у элемента, по которому кликнули, в объекте
     packBigPictureData(array, index); // заполняем модальное окно данными большого фото из объекта
     BODY.classList.add('modal-open');
     commentsLoader.classList.remove('hidden');
