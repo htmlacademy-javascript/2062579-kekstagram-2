@@ -2,18 +2,17 @@ import { createPictures } from './create-pictures.js'; // импорт функ�
 import { picturesContainer, openBigPicture } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
 import { uploadImageInput, openUploadForm } from './upload-photo.js'; // импорт функции загрузки изображения
 import { MAX_COMMENT_LENGTH, commentField, hashtagsField, pristine, validateComment, createErrorHashtagMessage, validateHashTagRules } from './validation-form.js'; // импорт данных валидации полей ввода формы
-import { effectLevelSlider, effectLevelValue, uploadImagePreview, effectStyle } from './add-effects.js';
-
-/* формируем объект с моковыми данными */
-// const photosArray = createPhotosArray();
-let photosArray = [];
+import { effectLevelSlider, effectLevelValue, uploadImagePreview, effectStyle } from './add-effects.js'; // импорт данных для работы слайдера
+// import { getServerData } from './get-server-data.js'; // импорт из модуля загрузки данных с сервера
 
 /* загрузка данных с сервера */
+let photosArray = []; // пустой массив для данных с сервера
+
 fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
   .then((response) => response.json())
   .then((data) => {
-    photosArray = data;
-    createPictures(data); // отрисовываем изображения
+    photosArray = data; // заполняем массив
+    createPictures(photosArray); // отрисовываем изображения
   });
 
 /* открываем большое фото */
