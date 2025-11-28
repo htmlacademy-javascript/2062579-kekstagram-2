@@ -1,16 +1,16 @@
-import { commentField, hashtagsField, validateUploadPhotoForm, pristine } from './validation-form.js'; // импорт данных валидации полей формы
+import { commentField, hashtagsField, pristine } from './validation-form.js'; // импорт данных валидации полей формы
 import { SCALE_PARAMETERS, scaleControlSmaller, scaleControlBigger, smallPhotoScale, bigPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
 import { effectLevelContainer, uploadImagePreview, effectsList, checkEffect } from './add-effects.js'; // импорт данных работы фильтров
+import { setFormData } from './interaction-server.js'; // импорт функции отправки данных на сервер
 
 const BODY = document.querySelector('BODY');
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
 export const uploadImageInput = uploadImageForm.querySelector('.img-upload__input'); // поле загрузки фото
 const uploadImageOverlay = uploadImageForm.querySelector('.img-upload__overlay'); // окно загрузки комм-я
-// const uploadImagePreview = uploadImageForm.querySelector('.img-upload__preview img'); // превьюшка
 const uploadImageCancel = uploadImageForm.querySelector('.img-upload__cancel'); // кнопка закрытия
 const effectsPreviews = uploadImageForm.querySelectorAll('.effects__preview'); // превьюшки в фильтрах
 
-const closeUploadForm = () => { // функция закрытия формы
+export const closeUploadForm = () => { // функция закрытия формы
   uploadImageOverlay.classList.add('hidden');
   BODY.classList.remove('modal-open');
 
@@ -18,7 +18,7 @@ const closeUploadForm = () => { // функция закрытия формы
 
   document.removeEventListener('keydown', onEscapeDown); // снятие обработчика с эскейпа
 
-  uploadImageForm.removeEventListener('submit', validateUploadPhotoForm); // удаление обработчик отправки формы
+  uploadImageForm.removeEventListener('submit', setFormData); // удаление обработчика отправки формы
 
   uploadImageForm.reset(); // сброс полей формы
 
@@ -61,7 +61,7 @@ export const openUploadForm = (evt) => { // функция открытия фо
 
   document.addEventListener('keydown', onEscapeDown); // обработчик на эскейп
 
-  uploadImageForm.addEventListener('submit', validateUploadPhotoForm); // обработчик валидации формы
+  uploadImageForm.addEventListener('submit', setFormData); // обработчик валидации формы
 
   scaleControlSmaller.addEventListener('click', smallPhotoScale); // обработчик кнопки уменьшения масштаба превью
   scaleControlBigger.addEventListener('click', bigPhotoScale); // обработчик кнопки увеличения масштаба превью

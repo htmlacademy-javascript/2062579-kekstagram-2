@@ -8,9 +8,8 @@ export const scaleControlBigger = document.querySelector('.scale__control--bigge
 export const scaleControlValue = document.querySelector('.scale__control--value'); // поле значения масштаба
 const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 
-let scaleValue = parseInt(scaleControlValue.value, 10);
-
 export const smallPhotoScale = () => {
+  let scaleValue = parseInt(scaleControlValue.value, 10);
   if (scaleValue > SCALE_PARAMETERS.MIN) {
     scaleValue -= SCALE_PARAMETERS.STEP;
     uploadImagePreview.style.scale = `${scaleValue}%`;
@@ -19,6 +18,7 @@ export const smallPhotoScale = () => {
 };
 
 export const bigPhotoScale = () => {
+  let scaleValue = parseInt(scaleControlValue.value, 10);
   if (scaleValue < SCALE_PARAMETERS.MAX) {
     scaleValue += SCALE_PARAMETERS.STEP;
     uploadImagePreview.style.scale = `${scaleValue}%`;

@@ -6,10 +6,8 @@ export const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); /
 const hashtagRules = /^#[a-zа-яё0-9]{1,19}$/i; // регулярное выражение для валидации хэштэга
 
 export const pristine = new Pristine(uploadImageForm, {
-  // class of the parent element where the error/success class is added
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
-  // class of the parent element where error text element is appended
   errorTextParent: 'img-upload__field-wrapper'
 });
 
@@ -81,9 +79,4 @@ export const validateHashTagRules = () => {
     }
   }
   return result;
-};
-
-export const validateUploadPhotoForm = (evt) => { // валидация формы
-  evt.preventDefault();
-  pristine.validate();
 };
