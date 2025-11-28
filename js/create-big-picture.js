@@ -1,5 +1,5 @@
-const BODY = document.querySelector('BODY');
 const NUMBER_OPEN_COMMENTS = 5; // сколько комментариев показываем за один раз
+const BODY = document.querySelector('BODY');
 export const picturesContainer = document.querySelector('.pictures'); // контейнер с фото
 const bigPicture = document.querySelector('.big-picture'); // блок большого фото
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); // крестик на большом фото
