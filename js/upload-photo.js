@@ -35,8 +35,9 @@ export const closeUploadForm = () => { // функция закрытия фор
 };
 
 function onEscapeDown (evt) { // функция закрытия окна по эскейпу
+  const errorMessage = document.querySelector('.error'); // окно ошибки загрузки фото
   if (evt.key === 'Escape') {
-    if (document.activeElement === commentField || document.activeElement === hashtagsField) { // при фокусе на полях ввода отключаем закрытие по эскейп
+    if (document.activeElement === commentField || document.activeElement === hashtagsField || errorMessage) { // при фокусе на полях ввода или сообщении об ошибке загрузки - отключаем закрытие по эскейп
       evt.stopPropagation();
     } else {
       closeUploadForm();

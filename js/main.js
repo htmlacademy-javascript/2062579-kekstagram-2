@@ -6,15 +6,6 @@ import { effectLevelSlider, effectLevelValue, uploadImagePreview, effectStyle } 
 import { getServerData } from './interaction-server.js'; // импорт функции загрузки данных с сервера
 
 /* загрузка данных с сервера */
-// let photosArray = []; // пустой массив для данных с сервера
-
-// fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
-//   .then((response) => response.json())
-//   .then((data) => {
-//     photosArray = data; // заполняем массив
-//     createPictures(photosArray); // отрисовываем изображения
-//   });
-
 const photosArray = await getServerData(); // загружаем данные с сервера
 createPictures(photosArray); // отрисовываем изображения
 
