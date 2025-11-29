@@ -1,25 +1,25 @@
-export const MAX_COMMENT_LENGTH = 140;
+const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_NUMBER = 5;
-export const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
-export const commentField = uploadImageForm.querySelector('.text__description'); // поле ввода комментария
-export const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // поле ввода хэштэгов
+const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
+const commentField = uploadImageForm.querySelector('.text__description'); // поле ввода комментария
+const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // поле ввода хэштэгов
 const hashtagRules = /^#[a-zа-яё0-9]{1,19}$/i; // регулярное выражение для валидации хэштэга
 
-export const pristine = new Pristine(uploadImageForm, {
+const pristine = new Pristine(uploadImageForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper'
 });
 
 /* проверка длины комментария */
-export const validateComment = () => commentField.value.length <= MAX_COMMENT_LENGTH;
+const validateComment = () => commentField.value.length <= MAX_COMMENT_LENGTH;
 
 /* проверка хэштэгов */
 let hashtagsFieldValues = []; // содержимое поля ввода хэштэгов
 
 let errorHashtagMessage = ''; // сообщение об ошибке
 
-export const createErrorHashtagMessage = () => { // функция создания комментария об ошибке
+const createErrorHashtagMessage = () => { // функция создания комментария об ошибке
   hashtagsFieldValues = hashtagsField.value.trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
 
   for (const hashtagsFieldValue of hashtagsFieldValues) {
@@ -52,7 +52,7 @@ export const createErrorHashtagMessage = () => { // функция создан�
   return errorHashtagMessage;
 };
 
-export const validateHashTagRules = () => {
+const validateHashTagRules = () => {
   hashtagsFieldValues = hashtagsField.value.trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
   let result = true;
 
@@ -80,3 +80,5 @@ export const validateHashTagRules = () => {
   }
   return result;
 };
+
+export { MAX_COMMENT_LENGTH, pristine, validateComment, createErrorHashtagMessage, validateHashTagRules };

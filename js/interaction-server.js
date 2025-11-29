@@ -72,7 +72,7 @@ function onWindowClick (evt) {
 }
 
 /* функция отправки данных на сервер */
-export const setFormData = (evt) => {
+const setFormData = (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate(); // валидация полей формы
 
@@ -100,9 +100,11 @@ export const setFormData = (evt) => {
 };
 
 /* функция получения данных с сервера */
-export const getServerData = async () => {
+const getServerData = async () => {
   const responce = await fetch('https://31.javascript.htmlacademy.pro/kekstagram/data');
   const serverData = await responce.json();
 
   return serverData;
 };
+
+export { setFormData, getServerData };

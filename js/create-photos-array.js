@@ -63,4 +63,6 @@ const getPhotoDescription = () => { // функция формирования �
   return photo;
 };
 
-export const createPhotosArray = () => Array.from({ length: PHOTOS_ID.END }, getPhotoDescription); // функция, формирующая массив описаний
+const createPhotosArray = () => Array.from({ length: PHOTOS_ID.END }, getPhotoDescription); // функция, формирующая массив описаний
+
+export { createPhotosArray };

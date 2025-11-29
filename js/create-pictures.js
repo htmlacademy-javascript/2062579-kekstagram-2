@@ -1,4 +1,4 @@
-export const createPictures = (datasArray) => {
+const createPictures = (datasArray) => {
   const picturesList = document.querySelector('.pictures'); // список с фотографиями
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture'); // шаблон для фото
   const picturesFragment = document.createDocumentFragment(); // фрагмент
@@ -18,3 +18,5 @@ export const createPictures = (datasArray) => {
 
   return picturesList.append(picturesFragment);
 };
+
+export { createPictures };

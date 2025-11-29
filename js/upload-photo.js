@@ -1,18 +1,24 @@
-import { commentField, hashtagsField, pristine } from './validation-form.js'; // импорт данных валидации полей формы
-import { SCALE_PARAMETERS, scaleControlSmaller, scaleControlBigger, smallPhotoScale, bigPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
-import { effectLevelContainer, uploadImagePreview, effectsList, checkEffect } from './add-effects.js'; // импорт данных работы фильтров
+import { pristine } from './validation-form.js'; // импорт данных валидации полей формы
+import { SCALE_PARAMETERS, smallPhotoScale, bigPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
+import { checkEffect } from './add-effects.js'; // импорт данных работы фильтров
 import { setFormData } from './interaction-server.js'; // импорт функции отправки данных на сервер
 
-const BODY = document.querySelector('BODY');
+const body = document.querySelector('body');
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
-export const uploadImageInput = uploadImageForm.querySelector('.img-upload__input'); // поле загрузки фото
 const uploadImageOverlay = uploadImageForm.querySelector('.img-upload__overlay'); // окно загрузки комм-я
 const uploadImageCancel = uploadImageForm.querySelector('.img-upload__cancel'); // кнопка закрытия
 const effectsPreviews = uploadImageForm.querySelectorAll('.effects__preview'); // превьюшки в фильтрах
+const effectLevelContainer = document.querySelector('.img-upload__effect-level'); // контейнер слайдера
+const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
+const effectsList = document.querySelector('.effects__list'); // список превьюшек фильтров
+const commentField = uploadImageForm.querySelector('.text__description'); // поле ввода комментария
+const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // поле ввода хэштэгов
+const scaleControlSmaller = document.querySelector('.scale__control--smaller'); // кнопка уменьшения масштаба
+const scaleControlBigger = document.querySelector('.scale__control--bigger'); // кнопка увеличения масштаба
 
-export const closeUploadForm = () => { // функция закрытия формы
+const closeUploadForm = () => { // функция закрытия формы
   uploadImageOverlay.classList.add('hidden');
-  BODY.classList.remove('modal-open');
+  body.classList.remove('modal-open');
 
   uploadImageCancel.removeEventListener('click', closeUploadForm); // снятие обработчика с крестика
 
@@ -45,9 +51,9 @@ function onEscapeDown (evt) { // функция закрытия окна по �
   }
 }
 
-export const openUploadForm = (evt) => { // функция открытия формы
+const openUploadForm = (evt) => { // функция открытия формы
   uploadImageOverlay.classList.remove('hidden');
-  BODY.classList.add('modal-open');
+  body.classList.add('modal-open');
   /* следующие две строки потребовались, чтобы обойти ошибку 'not allowed to load local resource' */
   const file = evt.target.files[0];
   const source = URL.createObjectURL(file);
@@ -69,3 +75,5 @@ export const openUploadForm = (evt) => { // функция открытия фо
 
   effectsList.addEventListener('change', checkEffect); // обработчик выбора фильтра
 };
+
+export { closeUploadForm, openUploadForm };
