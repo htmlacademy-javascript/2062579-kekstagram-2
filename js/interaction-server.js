@@ -1,4 +1,4 @@
-import { closeUploadForm } from './upload-photo'; // импорт функции закрытия окна
+// import { closeUploadForm } from './upload-photo'; // импорт функции закрытия окна
 import { pristine } from './validation-form';
 
 const body = document.querySelector('body');
@@ -47,6 +47,7 @@ function onEscapeDown (evt) {
 
 /* функция закрытия сообщения по клику на кнопке */
 function onButtonCloseMessage (element) {
+  removeListeners();
   element.remove();
 }
 
@@ -72,7 +73,7 @@ function onWindowClick (evt) {
 }
 
 /* функция отправки данных на сервер */
-const setFormData = (evt) => {
+const setFormData = (cb) => (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate(); // валидация полей формы
 
@@ -87,7 +88,7 @@ const setFormData = (evt) => {
     )
       .then( // при успешной отправке
         () => {
-          closeUploadForm(); // закрываем форму
+          cb(); // закрываем форму
           showSuccessMessage(); // показываем сообщение об успехе
         }
       )

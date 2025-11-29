@@ -16,7 +16,9 @@ const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // по�
 const scaleControlSmaller = document.querySelector('.scale__control--smaller'); // кнопка уменьшения масштаба
 const scaleControlBigger = document.querySelector('.scale__control--bigger'); // кнопка увеличения масштаба
 
-const closeUploadForm = () => { // функция закрытия формы
+const onSubmitForm = setFormData(closeUploadForm); // для передачи в добавление и удаление обработчиков
+
+function closeUploadForm () { // функция закрытия формы
   uploadImageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
 
@@ -24,7 +26,7 @@ const closeUploadForm = () => { // функция закрытия формы
 
   document.removeEventListener('keydown', onEscapeDown); // снятие обработчика с эскейпа
 
-  uploadImageForm.removeEventListener('submit', setFormData); // удаление обработчика отправки формы
+  uploadImageForm.removeEventListener('submit', onSubmitForm); // удаление обработчика отправки формы
 
   uploadImageForm.reset(); // сброс полей формы
 
@@ -38,7 +40,7 @@ const closeUploadForm = () => { // функция закрытия формы
   effectsList.removeEventListener('change', checkEffect); // снятие обработчика выбора фильтров
   uploadImagePreview.removeAttribute('style'); // сброс стилей фильтра
   effectLevelContainer.classList.add('hidden'); // скрытие слайдера
-};
+}
 
 function onEscapeDown (evt) { // функция закрытия окна по эскейпу
   const errorMessage = document.querySelector('.error'); // ищем окно об ошибке загрузки фото
@@ -68,7 +70,7 @@ const openUploadForm = (evt) => { // функция открытия формы
 
   document.addEventListener('keydown', onEscapeDown); // обработчик на эскейп
 
-  uploadImageForm.addEventListener('submit', setFormData); // обработчик валидации формы
+  uploadImageForm.addEventListener('submit', onSubmitForm); // обработчик валидации формы
 
   scaleControlSmaller.addEventListener('click', smallPhotoScale); // обработчик кнопки уменьшения масштаба превью
   scaleControlBigger.addEventListener('click', bigPhotoScale); // обработчик кнопки увеличения масштаба превью
