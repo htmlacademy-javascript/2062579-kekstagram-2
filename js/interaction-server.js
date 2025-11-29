@@ -25,6 +25,7 @@ const showErrorMessage = () => {
   return body.append(errorMessage);
 };
 
+/* функция удаления обработчиков в сообщениях об успехе/ошибке */
 const removeListeners = () => {
   document.removeEventListener('keydown', onEscapeDown);
   document.removeEventListener('click', onWindowClick);
@@ -73,10 +74,10 @@ function onWindowClick (evt) {
 /* функция отправки данных на сервер */
 export const setFormData = (evt) => {
   evt.preventDefault();
-  const isValid = pristine.validate();
+  const isValid = pristine.validate(); // валидация полей формы
 
   if (isValid) {
-    const formData = new FormData(evt.target);
+    const formData = new FormData(evt.target); // собираем данные из формы
 
     fetch('https://31.javascript.htmlacademy.pro/kekstagram',
       {
@@ -84,15 +85,15 @@ export const setFormData = (evt) => {
         body: formData
       }
     )
-      .then(
+      .then( // при успешной отправке
         () => {
-          closeUploadForm();
-          showSuccessMessage();
+          closeUploadForm(); // закрываем форму
+          showSuccessMessage(); // показываем сообщение об успехе
         }
       )
-      .catch(
+      .catch( // при не успешной отправке
         () => {
-          showErrorMessage();
+          showErrorMessage(); // только показываем собщение об ошибке
         }
       );
   }
