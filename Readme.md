@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Александр Кузнецов](https://up.htmlacademy.ru/javascript-individual/2/user/2062579).
-* Наставник: [Алексей Васильев](https://htmlacademy.ru/profile/id1353249).
+* Наставник: [Анастасия Гущина](https://htmlacademy.ru/profile/vanastasiya).
 
 ---
 
