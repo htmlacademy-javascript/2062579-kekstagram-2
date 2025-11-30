@@ -1,4 +1,4 @@
-export const getDataArrays = () => {
+const getDataArrays = () => {
   /* массив с описаниями к фото */
   const PHOTOS_DESCRIPTIONS = [
     'Что-то на пляжном',
@@ -67,3 +67,5 @@ export const getDataArrays = () => {
 
   return { PHOTOS_DESCRIPTIONS, RAW_MESSAGES, NAMES };
 };
+
+export { getDataArrays };
