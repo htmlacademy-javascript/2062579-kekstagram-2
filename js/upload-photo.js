@@ -1,5 +1,5 @@
 import { pristine } from './validation-form.js'; // импорт данных валидации полей формы
-import { SCALE_PARAMETERS, smallPhotoScale, bigPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
+import { SCALE_PARAMETERS, downPhotoScale, upPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
 import { checkEffect } from './add-effects.js'; // импорт данных работы фильтров
 import { setFormData } from './interaction-server.js'; // импорт функции отправки данных на сервер
 
@@ -32,8 +32,8 @@ function closeUploadForm () { // функция закрытия формы
 
   pristine.reset(); // сброс валидации
 
-  scaleControlSmaller.removeEventListener('click', smallPhotoScale); // снятие обработчика кнопки уменьшения масштаба превью
-  scaleControlBigger.removeEventListener('click', bigPhotoScale); // снятие обработчика кнопки увеличения масштаба превью
+  scaleControlSmaller.removeEventListener('click', downPhotoScale); // снятие обработчика кнопки уменьшения масштаба превью
+  scaleControlBigger.removeEventListener('click', upPhotoScale); // снятие обработчика кнопки увеличения масштаба превью
 
   uploadImagePreview.style.scale = `${SCALE_PARAMETERS.MAX}%`; // сброс значения масштаба превью
 
@@ -72,8 +72,8 @@ const openUploadForm = (evt) => { // функция открытия формы
 
   uploadImageForm.addEventListener('submit', onSubmitForm); // обработчик валидации формы
 
-  scaleControlSmaller.addEventListener('click', smallPhotoScale); // обработчик кнопки уменьшения масштаба превью
-  scaleControlBigger.addEventListener('click', bigPhotoScale); // обработчик кнопки увеличения масштаба превью
+  scaleControlSmaller.addEventListener('click', downPhotoScale); // обработчик кнопки уменьшения масштаба превью
+  scaleControlBigger.addEventListener('click', upPhotoScale); // обработчик кнопки увеличения масштаба превью
 
   effectsList.addEventListener('change', checkEffect); // обработчик выбора фильтра
 };

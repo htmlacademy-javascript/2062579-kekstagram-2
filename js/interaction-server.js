@@ -1,11 +1,13 @@
 import { pristine } from './validation-form';
 
+const ERROR_MESSAGE_TIMEOUT = 5000; // время показа сообщения об ошибке загрузки данных
 const body = document.querySelector('body');
-const successMessageTemplate = document.querySelector('#success').content.querySelector('.success'); // шаблон сообщения об успешной загрузке
-const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения о неуспешной загрузке
+const successMessageTemplate = document.querySelector('#success').content.querySelector('.success'); // шаблон сообщения об успешной отправке фото
+const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения о неуспешной отправке фото
+const errorGetMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error'); // шаблон сообщения о неуспешной загрузке данных
 
 /* функция показа сообщения при отправке данных */
-const showMessage = (result) => {
+const showSetMessage = (result) => {
   let resultMessage; // элемент с сообщением о результате
   if (result === 'success') {
     resultMessage = successMessageTemplate.cloneNode(true);
@@ -18,6 +20,17 @@ const showMessage = (result) => {
   resultButton.addEventListener('click', () => onButtonCloseMessage(resultMessage));
   document.addEventListener('keydown', onEscapeDown);
   document.addEventListener('click', onWindowClick);
+  return body.append(resultMessage);
+};
+
+/* функция показа сообщения при загрузке данных */
+const showGetMessage = () => {
+  const resultMessage = errorGetMessageTemplate.cloneNode(true);
+
+  setTimeout(() => { // установка удаления сообщения
+    resultMessage.remove();
+  }, ERROR_MESSAGE_TIMEOUT);
+
   return body.append(resultMessage);
 };
 
@@ -56,7 +69,7 @@ function onWindowClick (evt) {
 }
 
 /* функция отправки данных на сервер */
-const setFormData = (closeForm) => (evt) => {
+const setFormData = (submitForm) => (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate(); // валидация полей формы
 
@@ -71,13 +84,13 @@ const setFormData = (closeForm) => (evt) => {
     )
       .then( // при успешной отправке
         () => {
-          closeForm(); // закрываем форму
-          showMessage('success');
+          submitForm(); // закрываем форму
+          showSetMessage('success');
         }
       )
       .catch( // при не успешной отправке
         () => {
-          showMessage('error');
+          showSetMessage('error');
         }
       );
   }
@@ -85,9 +98,16 @@ const setFormData = (closeForm) => (evt) => {
 
 /* функция получения данных с сервера */
 const getServerData = async () => {
-  const responce = await fetch('https://31.javascript.htmlacademy.pro/kekstagram/data');
+  let responce;
+  try {
+    responce = await fetch('https://31.javascript.htmlacademy.pro/kekstagram/data');
+    if (!responce.ok) {
+      showGetMessage();
+    }
+  } catch {
+    showGetMessage();
+  }
   const serverData = await responce.json();
-
   return serverData;
 };
 

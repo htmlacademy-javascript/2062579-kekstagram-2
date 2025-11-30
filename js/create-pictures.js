@@ -1,3 +1,4 @@
+/* функция отрисовки фотографии в большом размере */
 const createPictures = (datasArray) => {
   const picturesList = document.querySelector('.pictures'); // список с фотографиями
   const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture'); // шаблон для фото

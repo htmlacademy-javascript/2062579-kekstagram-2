@@ -44,7 +44,27 @@ const openComments = (array, i) => { // функция, открывающая �
   }
 };
 
-function manageComments () { // функция управления блоком комментариев
+/* функция управления блоком комментариев */
+function manageComments () {
+  const workArray = Array.from(socialCommentsCollection); // превращаем коллекцию в массив
+  const startElement = workArray.findIndex((elem) => // находим, какой первый элемент с классом 'hidden'
+    elem.classList.contains('hidden')
+  );
+  if (workArray.length === 0) {
+    commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если нет комментариев
+  }
+  socialCommentShownCount.textContent = 0;
+  for (let i = startElement; i < startElement + NUMBER_OPEN_COMMENTS; i++) { // удаляем с 5 эл-в класс 'hidden' начиная с первого найденного
+    if (!workArray[i]) { // завершаем цикл если элементы закончились
+      break;
+    }
+    openComments(workArray, i); // загружаем комментарии
+    countOpenComments(i); // меняем кол-во показанных ком-в
+    hiddenCommentLoaderButton(workArray, i); // убираем кнопку-загрузчик
+  }
+}
+
+function manageComments2 () {
   const workArray = Array.from(socialCommentsCollection); // превращаем коллекцию в массив
   const startElement = workArray.findIndex((elem) => // находим, какой первый элемент с классом 'hidden'
     elem.classList.contains('hidden')
@@ -82,6 +102,16 @@ function onEscapeDown (evt) { // функция закрытия окна по �
 }
 
 const packBigPictureData = (array, id) => { // функция заполнения полей большого фото
+  bigPictureImg.src = array[id].url;
+  socialCaption.textContent = array[id].description;
+  socialCommentsTotal.textContent = array[id].comments.length;
+  likesCount.textContent = array[id].likes;
+  socialComments.innerHTML = '';
+  array[id].comments.forEach(createCommentsListItem);
+  socialComments.append(socialCommentsFragment);
+};
+
+const packBigPictureData2 = (array, id) => { // функция заполнения полей большого фото
   bigPictureImg.src = array[id].url;
   socialCaption.textContent = array[id].description;
   socialCommentsTotal.textContent = array[id].comments.length;
