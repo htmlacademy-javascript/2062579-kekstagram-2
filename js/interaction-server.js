@@ -1,4 +1,3 @@
-// import { closeUploadForm } from './upload-photo'; // импорт функции закрытия окна
 import { pristine } from './validation-form';
 
 const body = document.querySelector('body');
@@ -6,14 +5,15 @@ const successMessageTemplate = document.querySelector('#success').content.queryS
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения о неуспешной загрузке
 
 /* функция показа сообщения при отправке данных */
-let resultMessage; // элемент с сообщением о результате
 const showMessage = (result) => {
+  let resultMessage; // элемент с сообщением о результате
   if (result === 'success') {
     resultMessage = successMessageTemplate.cloneNode(true);
   }
   if (result === 'error') {
     resultMessage = errorMessageTemplate.cloneNode(true);
   }
+  resultMessage.classList.add('result-message');
   const resultButton = resultMessage.querySelector(`.${result}__button`);
   resultButton.addEventListener('click', () => onButtonCloseMessage(resultMessage));
   document.addEventListener('keydown', onEscapeDown);
@@ -29,15 +29,10 @@ const removeListeners = () => {
 
 /* функция закрытия сообщения по эскейпу */
 function onEscapeDown (evt) {
-  const successMessage = document.querySelector('.success');
-  const errorMessage = document.querySelector('.error');
-  if (evt.key === 'Escape' && successMessage) {
+  const resultMessage = document.querySelector('.result-message');
+  if (evt.key === 'Escape') {
     removeListeners();
-    successMessage.remove();
-  }
-  if (evt.key === 'Escape' && errorMessage) {
-    removeListeners();
-    errorMessage.remove();
+    resultMessage.remove();
   }
 }
 
@@ -49,21 +44,13 @@ function onButtonCloseMessage (element) {
 
 /* функция закрытия окна по клику на остальной части окна */
 function onWindowClick (evt) {
-  const successMessage = document.querySelector('.success');
-  const errorMessage = document.querySelector('.error');
-  if (successMessage) {
-    const successMessageInner = successMessage.querySelector('.success__inner'); // окно с сообщением об успехе
-    const isSuccessMessage = evt.composedPath().includes(successMessageInner); // проверка, что клик не в окне
-    if (!isSuccessMessage) {
+  const resultMessage = document.querySelector('.result-message');
+  if (resultMessage) {
+    const resultMessageInner = resultMessage.querySelector('div'); // окно с сообщением об успехе
+    const isResultMessage = evt.composedPath().includes(resultMessageInner); // проверка, что клик не в окне
+    if (!isResultMessage) {
       removeListeners();
-      successMessage.remove();
-    }
-  } else if (errorMessage) {
-    const errorMessageInner = errorMessage.querySelector('.error__inner'); // окно с сообщением об ошибке
-    const isErrorMessage = evt.composedPath().includes(errorMessageInner); // проверка, что клик не в окне
-    if (!isErrorMessage) {
-      removeListeners();
-      errorMessage.remove();
+      resultMessage.remove();
     }
   }
 }
