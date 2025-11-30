@@ -1,4 +1,5 @@
 const NUMBER_OPEN_COMMENTS = 5; // сколько комментариев показываем за один раз
+const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture'); // блок большого фото
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); // крестик на большом фото
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img'); // изображение большого фото
@@ -45,7 +46,6 @@ const openComments = (array, i) => { // функция, открывающая �
 };
 
 function manageComments () { // функция управления блоком комментариев
-function manageComments () { // функция управления блоком комментариев
   const workArray = Array.from(socialCommentsCollection); // превращаем коллекцию в массив
   const startElement = workArray.findIndex((elem) => // находим, какой первый элемент с классом 'hidden'
     elem.classList.contains('hidden')
@@ -66,12 +66,11 @@ function manageComments () { // функция управления блоком
     hiddenCommentLoaderButton(workArray, i); // убираем кнопку-загрузчик
   }
 }
-}
 
 const closeBigPicture = () => { // функция закрытия окна
   bigPicture.classList.add('hidden'); // закрыть окно
 
-  BODY.classList.remove('modal-open');
+  body.classList.remove('modal-open');
 
   commentsLoader.removeEventListener('click', manageComments); // снять обработчик с кнопки дозагрузки комм-в
 
@@ -81,11 +80,9 @@ const closeBigPicture = () => { // функция закрытия окна
 };
 
 function onEscapeDown (evt) { // функция закрытия окна по эскейпу
-function onEscapeDown (evt) { // функция закрытия окна по эскейпу
   if (evt.key === 'Escape') {
     closeBigPicture();
   }
-}
 }
 
 const packBigPictureData = (array, id) => { // функция заполнения полей большого фото
@@ -105,7 +102,7 @@ const openBigPicture = (evt, array) => { // функция открытия ок
 
     const index = evt.target.dataset.id - 1; // определяем какой индекс у элемента, по которому кликнули, в объекте
     packBigPictureData(array, index); // заполняем модальное окно данными большого фото из объекта
-    BODY.classList.add('modal-open');
+    body.classList.add('modal-open');
     commentsLoader.classList.remove('hidden');
     manageComments(); // сразу загружаем 5 комментариев
     commentsLoader.addEventListener('click', manageComments); // вешаем обработчик на кнопку загрузки комм-в
