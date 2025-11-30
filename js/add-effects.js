@@ -1,11 +1,10 @@
-export const effectLevelSlider = document.querySelector('.effect-level__slider'); // слайдер
-export const effectLevelContainer = document.querySelector('.img-upload__effect-level'); // контейнер слайдера
-export const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
-export const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
-export const effectsList = document.querySelector('.effects__list'); // список превьюшек фильтров
+const effectLevelSlider = document.querySelector('.effect-level__slider'); // слайдер
+const effectLevelContainer = document.querySelector('.img-upload__effect-level'); // контейнер слайдера
+const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
+const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 
-export let effectName = 'none'; // имя эффекта для инлайн-стиля
-export let effectParameter = ''; // параметр эффекта для инлайе стиля: px, % или ничего
+let effectName = 'none'; // имя эффекта для инлайн-стиля
+let effectParameter = ''; // параметр эффекта для инлайе стиля: px, % или ничего
 effectLevelContainer.classList.add('hidden'); // скрываем слайдер при загрузке
 
 noUiSlider.create(effectLevelSlider, { // подключаем слайдер
@@ -18,9 +17,9 @@ noUiSlider.create(effectLevelSlider, { // подключаем слайдер
   connect: 'lower'
 });
 
-export const effectStyle = () => `${effectName}(${effectLevelValue.value}${effectParameter})`; // параметр для инлайн-стиля
+const effectStyle = () => `${effectName}(${effectLevelValue.value}${effectParameter})`; // параметр для инлайн-стиля
 
-export const checkEffect = (evt) => { // функция выбора эффекта при клике по превьюшке
+const checkEffect = (evt) => { // функция выбора эффекта при клике по превьюшке
   const checkedEffect = evt.target.id; // id выбранного эффекта
 
   switch (checkedEffect) {
@@ -107,3 +106,5 @@ export const checkEffect = (evt) => { // функция выбора эффек�
       break;
   }
 };
+
+export { effectName, effectParameter, effectStyle, checkEffect };

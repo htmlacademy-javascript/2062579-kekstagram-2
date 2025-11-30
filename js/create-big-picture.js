@@ -1,6 +1,5 @@
 const BODY = document.querySelector('BODY');
 const NUMBER_OPEN_COMMENTS = 5; // сколько комментариев показываем за один раз
-export const picturesContainer = document.querySelector('.pictures'); // контейнер с фото
 const bigPicture = document.querySelector('.big-picture'); // блок большого фото
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); // крестик на большом фото
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img'); // изображение большого фото
@@ -93,7 +92,7 @@ const packBigPictureData = (array, id) => { // функция заполнени
   socialComments.append(socialCommentsFragment);
 };
 
-export const openBigPicture = (evt, array) => { // функция открытия окна
+const openBigPicture = (evt, array) => { // функция открытия окна
   if (evt.target.matches('.picture__img')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно
@@ -110,3 +109,5 @@ export const openBigPicture = (evt, array) => { // функция открыти
     document.addEventListener('keydown', onEscapeDown); // повесить обработчик на эскейп
   }
 };
+
+export { openBigPicture };
