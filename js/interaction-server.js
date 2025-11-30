@@ -3,26 +3,22 @@ import { pristine } from './validation-form';
 
 const body = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success'); // шаблон сообщения об успешной загрузке
-const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения об успешной загрузке
+const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения о неуспешной загрузке
 
-/* функция показа сообщения об успешной отправке данных */
-const showSuccessMessage = () => {
-  const successMessage = successMessageTemplate.cloneNode(true);
-  const successButton = successMessage.querySelector('.success__button');
-  successButton.addEventListener('click', () => onButtonCloseMessage(successMessage));
+/* функция показа сообщения при отправке данных */
+let resultMessage; // элемент с сообщением о результате
+const showMessage = (result) => {
+  if (result === 'success') {
+    resultMessage = successMessageTemplate.cloneNode(true);
+  }
+  if (result === 'error') {
+    resultMessage = errorMessageTemplate.cloneNode(true);
+  }
+  const resultButton = resultMessage.querySelector(`.${result}__button`);
+  resultButton.addEventListener('click', () => onButtonCloseMessage(resultMessage));
   document.addEventListener('keydown', onEscapeDown);
   document.addEventListener('click', onWindowClick);
-  return body.append(successMessage);
-};
-
-/* функция показа сообщения об ошибке при отправке данных */
-const showErrorMessage = () => {
-  const errorMessage = errorMessageTemplate.cloneNode(true);
-  const successButton = errorMessage.querySelector('.error__button');
-  successButton.addEventListener('click', () => onButtonCloseMessage(errorMessage));
-  document.addEventListener('keydown', onEscapeDown);
-  document.addEventListener('click', onWindowClick);
-  return body.append(errorMessage);
+  return body.append(resultMessage);
 };
 
 /* функция удаления обработчиков в сообщениях об успехе/ошибке */
@@ -73,7 +69,7 @@ function onWindowClick (evt) {
 }
 
 /* функция отправки данных на сервер */
-const setFormData = (cb) => (evt) => {
+const setFormData = (closeForm) => (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate(); // валидация полей формы
 
@@ -88,13 +84,13 @@ const setFormData = (cb) => (evt) => {
     )
       .then( // при успешной отправке
         () => {
-          cb(); // закрываем форму
-          showSuccessMessage(); // показываем сообщение об успехе
+          closeForm(); // закрываем форму
+          showMessage('success');
         }
       )
       .catch( // при не успешной отправке
         () => {
-          showErrorMessage(); // только показываем собщение об ошибке
+          showMessage('error');
         }
       );
   }
