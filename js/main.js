@@ -15,10 +15,8 @@ const commentField = uploadImageForm.querySelector('.text__description'); // п�
 const uploadImageInput = uploadImageForm.querySelector('.img-upload__input'); // поле загрузки фото
 const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // поле ввода хэштэгов
 
-/* загрузка данных с сервера */
-// const photosArray = await getServerData(); // загружаем данные с сервера
-createPictures(photosArray); // отрисовываем изображения
-// console.log(photosArray);
+/* отрисовываем изображения по данным с сервера */
+createPictures(photosArray);
 
 /* открываем большое фото */
 picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, photosArray));
