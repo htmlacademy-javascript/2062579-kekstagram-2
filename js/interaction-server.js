@@ -1,5 +1,9 @@
 import { pristine } from './validation-form';
 
+const SERVER_ADDRESS = {
+  SET: 'https://31.javascript.htmlacademy.pro/kekstagram',
+  GET: 'https://31.javascript.htmlacademy.pro/kekstagram/data'
+};
 const ERROR_MESSAGE_TIMEOUT = 5000; // время показа сообщения об ошибке загрузки данных
 const body = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success'); // шаблон сообщения об успешной отправке фото
@@ -76,7 +80,7 @@ const setFormData = (submitForm) => (evt) => {
   if (isValid) {
     const formData = new FormData(evt.target); // собираем данные из формы
 
-    fetch('https://31.javascript.htmlacademy.pro/kekstagram',
+    fetch(SERVER_ADDRESS.SET,
       {
         method: 'POST',
         body: formData
@@ -100,7 +104,7 @@ const setFormData = (submitForm) => (evt) => {
 const getServerData = async () => {
   let responce;
   try {
-    responce = await fetch('https://31.javascript.htmlacademy.pro/kekstagram/data');
+    responce = await fetch(SERVER_ADDRESS.GET);
     if (!responce.ok) {
       showGetMessage();
     }
