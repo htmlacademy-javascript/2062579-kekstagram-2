@@ -1,7 +1,7 @@
 import { photosArray } from './interaction-server.js'; // импорт данных с сервера
 
-const body = document.querySelector('body');
 const NUMBER_OPEN_COMMENTS = 5; // сколько комментариев показываем за один раз
+const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture'); // блок большого фото
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); // крестик на большом фото
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img'); // изображение большого фото

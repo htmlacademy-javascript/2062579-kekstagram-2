@@ -1,9 +1,8 @@
-const SCALE_PARAMETERS = {
+const SCALE_PARAMETERS = { // параметры для масштаба
   MIN: 25,
   MAX: 100,
   STEP: 25
 };
-
 const scaleControlValue = document.querySelector('.scale__control--value'); // поле значения масштаба
 const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 
