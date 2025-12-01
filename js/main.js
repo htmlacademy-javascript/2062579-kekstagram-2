@@ -3,7 +3,8 @@ import { openBigPicture } from './create-big-picture.js'; // импорт фун
 import { openUploadForm } from './upload-photo.js'; // импорт функции загрузки изображения
 import { MAX_COMMENT_LENGTH, pristine, validateComment, createErrorHashtagMessage, validateHashTagRules } from './validation-form.js'; // импорт данных валидации полей ввода формы
 import { effectStyle } from './add-effects.js'; // импорт данных для работы слайдера
-import { getServerData } from './interaction-server.js'; // импорт функции загрузки данных с сервера
+// import { getServerData } from './interaction-server.js'; // импорт функции загрузки данных с сервера
+import { photosArray } from './interaction-server.js'; // импорт данных с сервера
 
 const effectLevelSlider = document.querySelector('.effect-level__slider'); // слайдер
 const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
@@ -15,8 +16,9 @@ const uploadImageInput = uploadImageForm.querySelector('.img-upload__input'); //
 const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // поле ввода хэштэгов
 
 /* загрузка данных с сервера */
-const photosArray = await getServerData(); // загружаем данные с сервера
+// const photosArray = await getServerData(); // загружаем данные с сервера
 createPictures(photosArray); // отрисовываем изображения
+// console.log(photosArray);
 
 /* открываем большое фото */
 picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, photosArray));

@@ -111,4 +111,7 @@ const getServerData = async () => {
   return serverData;
 };
 
-export { setFormData, getServerData };
+/* загружаем данные с сервера */
+const photosArray = await getServerData();
+
+export { setFormData, photosArray };
