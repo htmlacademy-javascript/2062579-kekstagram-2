@@ -1,3 +1,47 @@
+/* параметры эффектов */
+const NONE = { // без эффекта
+  MIN: 0,
+  MAX: 100,
+  STEP: 1,
+  EFFECT: 'none',
+  PARAM: ''
+};
+const CHROME = { // хром
+  MIN: 0,
+  MAX: 1,
+  STEP: 0.1,
+  EFFECT: 'grayscale',
+  PARAM: ''
+};
+const SEPIA = { // сепия
+  MIN: 0,
+  MAX: 1,
+  STEP: 0.1,
+  EFFECT: 'sepia',
+  PARAM: ''
+};
+const MARVIN = { // марвин
+  MIN: 0,
+  MAX: 100,
+  STEP: 1,
+  EFFECT: 'invert',
+  PARAM: '%'
+};
+const PHOBOS = { // фобос
+  MIN: 0,
+  MAX: 3,
+  STEP: 0.1,
+  EFFECT: 'blur',
+  PARAM: 'px'
+};
+const HEAT = { // хит
+  MIN: 1,
+  MAX: 3,
+  STEP: 0.1,
+  EFFECT: 'brightness',
+  PARAM: ''
+};
+
 const effectLevelSlider = document.querySelector('.effect-level__slider'); // слайдер
 const effectLevelContainer = document.querySelector('.img-upload__effect-level'); // контейнер слайдера
 const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
@@ -26,81 +70,81 @@ const checkEffect = (evt) => { // функция выбора эффекта п�
     case 'effect-none':
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
-          min: 0,
-          max: 100
+          min: NONE.MIN,
+          max: NONE.MAX
         },
-        step: 1,
+        step: NONE.STEP,
       });
-      uploadImagePreview.style.filter = 'none';
+      uploadImagePreview.style.filter = NONE.EFFECT;
       effectLevelContainer.classList.add('hidden');
       break;
     case 'effect-chrome':
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
-          min: 0,
-          max: 1
+          min: CHROME.MIN,
+          max: CHROME.MAX
         },
-        step: 0.1,
+        step: CHROME.STEP,
       });
-      effectLevelSlider.noUiSlider.set(1);
-      effectName = 'grayscale';
-      effectParameter = '';
+      effectLevelSlider.noUiSlider.set(CHROME.MAX);
+      effectName = CHROME.EFFECT;
+      effectParameter = CHROME.PARAM;
       uploadImagePreview.style.filter = effectStyle();
       effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-sepia':
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
-          min: 0,
-          max: 1
+          min: SEPIA.MIN,
+          max: SEPIA.MAX
         },
-        step: 0.1,
+        step: SEPIA.STEP,
       });
-      effectLevelSlider.noUiSlider.set(1);
-      effectName = 'sepia';
-      effectParameter = '';
+      effectLevelSlider.noUiSlider.set(SEPIA.MAX);
+      effectName = SEPIA.EFFECT;
+      effectParameter = SEPIA.PARAM;
       uploadImagePreview.style.filter = effectStyle();
       effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-marvin':
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
-          min: 0,
-          max: 100
+          min: MARVIN.MIN,
+          max: MARVIN.MAX
         },
-        step: 1,
+        step: MARVIN.STEP,
       });
-      effectLevelSlider.noUiSlider.set(100);
-      effectName = 'invert';
-      effectParameter = '%';
+      effectLevelSlider.noUiSlider.set(MARVIN.MAX);
+      effectName = MARVIN.EFFECT;
+      effectParameter = MARVIN.PARAM;
       uploadImagePreview.style.filter = effectStyle();
       effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-phobos':
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
-          min: 0,
-          max: 3
+          min: PHOBOS.MIN,
+          max: PHOBOS.MAX
         },
-        step: 0.1,
+        step: PHOBOS.STEP,
       });
-      effectLevelSlider.noUiSlider.set(3);
-      effectName = 'blur';
-      effectParameter = 'px';
+      effectLevelSlider.noUiSlider.set(PHOBOS.MAX);
+      effectName = PHOBOS.EFFECT;
+      effectParameter = PHOBOS.PARAM;
       uploadImagePreview.style.filter = effectStyle();
       effectLevelContainer.classList.remove('hidden');
       break;
     case 'effect-heat':
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
-          min: 1,
-          max: 3
+          min: HEAT.MIN,
+          max: HEAT.MAX
         },
-        step: 0.1,
+        step: HEAT.STEP,
       });
-      effectLevelSlider.noUiSlider.set(3);
-      effectName = 'brightness';
-      effectParameter = '';
+      effectLevelSlider.noUiSlider.set(HEAT.MAX);
+      effectName = HEAT.EFFECT;
+      effectParameter = HEAT.PARAM;
       uploadImagePreview.style.filter = effectStyle();
       effectLevelContainer.classList.remove('hidden');
       break;
