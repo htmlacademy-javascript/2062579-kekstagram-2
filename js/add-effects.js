@@ -46,17 +46,17 @@ const effectLevelContainer = document.querySelector('.img-upload__effect-level')
 const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
 const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 
-let effectName = 'none'; // имя эффекта для инлайн-стиля
-let effectParameter = ''; // параметр эффекта для инлайн стиля: px, % или ничего
+let effectName = NONE.EFFECT; // имя эффекта для инлайн-стиля
+let effectParameter = NONE.PARAM; // параметр эффекта для инлайн стиля: px, % или ничего
 effectLevelContainer.classList.add('hidden'); // скрываем слайдер при загрузке
 
 noUiSlider.create(effectLevelSlider, { // подключаем слайдер
   range: {
-    min: 0,
-    max: 100
+    min: NONE.MIN,
+    max: NONE.MAX
   },
-  start: 100,
-  step: 1,
+  start: NONE.MAX,
+  step: NONE.STEP,
   connect: 'lower'
 });
 
