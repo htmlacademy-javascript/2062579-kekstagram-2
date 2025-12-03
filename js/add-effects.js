@@ -50,6 +50,8 @@ const uploadImagePreview = document.querySelector('.img-upload__preview img'); /
 
 let effectName = 'none'; // имя эффекта для инлайн-стиля
 let effectParameter = ''; // параметр эффекта для инлайе стиля: px, % или ничего
+// let effectName = EFFECTS['none'].EFFECT; // имя эффекта для инлайн-стиля
+// let effectParameter = EFFECTS['none'].PARAM; // параметр эффекта для инлайе стиля: px, % или ничего
 effectLevelContainer.classList.add('hidden'); // скрываем слайдер при загрузке
 
 noUiSlider.create(effectLevelSlider, { // подключаем слайдер
@@ -61,14 +63,17 @@ noUiSlider.create(effectLevelSlider, { // подключаем слайдер
   step: 1,
   connect: 'lower'
 });
+// noUiSlider.create(effectLevelSlider, { // подключаем слайдер
+//   range: {
+//     min: EFFECTS['none'].MIN,
+//     max: EFFECTS['none'].MAX
+//   },
+//   start: EFFECTS['none'].MAX,
+//   step: EFFECTS['none'].STEP,
+//   connect: 'lower'
+// });
 
-const effectStyle = () => { // параметр для инлайн-стиля
-  if (effectName === 'none') {
-    return `${effectName}`;
-  } else {
-    return `${effectName}(${effectLevelValue.value}${effectParameter})`;
-  }
-};
+const effectStyle = () => effectName === 'none' ? `${effectName}` : `${effectName}(${effectLevelValue.value}${effectParameter})`; // параметр для инлайн-стиля
 
 const setEffect = (currentEffect) => { // функция установки значений эффектов
   effectLevelSlider.noUiSlider.updateOptions({
