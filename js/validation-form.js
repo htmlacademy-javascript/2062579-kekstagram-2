@@ -25,7 +25,7 @@ const createErrorHashtagMessage = () => { // функция создания к�
   for (const hashtagsFieldValue of hashtagsFieldValues) {
     if (!hashtagRules.test(hashtagsFieldValue)) { // если не прошла валидация хэштэга, то
       if (hashtagsFieldValue[0] !== '#') {
-        errorHashtagMessage = 'Хэштэг начинается с #';
+        errorHashtagMessage = 'Хэштэг должен начинаться с #';
       } else if (hashtagsFieldValue.length === 1) {
         errorHashtagMessage = 'Хэштэг не может быть из одной #';
       } else if (hashtagsFieldValue.length > 20) {
