@@ -39,14 +39,9 @@ const createErrorHashtagMessage = () => { // функция создания к�
     errorHashtagMessage = 'Не больше пяти хэштэгов';
   }
   if (hashtagsFieldValues.length > 1) { // проверка на повторение хэштэгов, если их больше одного
-    for (let i = 0; i < hashtagsFieldValues.length - 1; i++) {
-      const compareHashTag = hashtagsFieldValues[i];
-      for (let j = i + 1; j < hashtagsFieldValues.length; j++) {
-        if (compareHashTag === hashtagsFieldValues[j]) {
-          errorHashtagMessage = 'Хэштеги не должны повторяться';
-          break;
-        }
-      }
+    const unicHashTags = new Set(hashtagsFieldValues);
+    if (unicHashTags.size !== hashtagsFieldValues.length) {
+      errorHashtagMessage = 'Хэштеги не должны повторяться';
     }
   }
   return errorHashtagMessage;
@@ -69,13 +64,9 @@ const validateHashTagRules = () => {
     result = false;
   }
   if (hashtagsFieldValues.length > 1) { // проверка на повторение хэштегов
-    for (let i = 0; i < hashtagsFieldValues.length - 1; i++) {
-      const compareHashTag = hashtagsFieldValues[i];
-      for (let j = i + 1; j < hashtagsFieldValues.length; j++) {
-        if (compareHashTag === hashtagsFieldValues[j]) {
-          result = false;
-        }
-      }
+    const unicHashTags = new Set(hashtagsFieldValues);
+    if (unicHashTags.size !== hashtagsFieldValues.length) {
+      result = false;
     }
   }
   return result;
