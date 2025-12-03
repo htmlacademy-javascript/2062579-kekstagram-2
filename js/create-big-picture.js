@@ -1,6 +1,5 @@
 const NUMBER_OPEN_COMMENTS = 5; // сколько комментариев показываем за один раз
-const BODY = document.querySelector('BODY');
-export const picturesContainer = document.querySelector('.pictures'); // контейнер с фото
+const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture'); // блок большого фото
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); // крестик на большом фото
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img'); // изображение большого фото
@@ -51,6 +50,9 @@ function manageComments () { // функция управления блоком
   const startElement = workArray.findIndex((elem) => // находим, какой первый элемент с классом 'hidden'
     elem.classList.contains('hidden')
   );
+  if (workArray.length === 0) {
+    commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если нет комментариев
+  }
   socialCommentShownCount.textContent = 0;
   if (workArray.length === 0) {
     commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если нет комментариев
@@ -68,7 +70,7 @@ function manageComments () { // функция управления блоком
 const closeBigPicture = () => { // функция закрытия окна
   bigPicture.classList.add('hidden'); // закрыть окно
 
-  BODY.classList.remove('modal-open');
+  body.classList.remove('modal-open');
 
   commentsLoader.removeEventListener('click', manageComments); // снять обработчик с кнопки дозагрузки комм-в
 
@@ -93,14 +95,14 @@ const packBigPictureData = (array, id) => { // функция заполнени
   socialComments.append(socialCommentsFragment);
 };
 
-export const openBigPicture = (evt, array) => { // функция открытия окна
+const openBigPicture = (evt, array) => { // функция открытия окна
   if (evt.target.matches('.picture__img')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно
 
-    const index = evt.target.dataset.id - 1; // определяем какой индекс элемента, по которому кликнули, в объекте
+    const index = evt.target.dataset.id - 1; // определяем какой индекс у элемента, по которому кликнули, в объекте
     packBigPictureData(array, index); // заполняем модальное окно данными большого фото из объекта
-    BODY.classList.add('modal-open');
+    body.classList.add('modal-open');
     commentsLoader.classList.remove('hidden');
     manageComments(); // сразу загружаем 5 комментариев
     commentsLoader.addEventListener('click', manageComments); // вешаем обработчик на кнопку загрузки комм-в
@@ -110,3 +112,5 @@ export const openBigPicture = (evt, array) => { // функция открыти
     document.addEventListener('keydown', onEscapeDown); // повесить обработчик на эскейп
   }
 };
+
+export { openBigPicture };
