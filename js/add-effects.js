@@ -48,30 +48,30 @@ const effectLevelContainer = document.querySelector('.img-upload__effect-level')
 const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
 const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 
-let effectName = 'none'; // имя эффекта для инлайн-стиля
-let effectParameter = ''; // параметр эффекта для инлайе стиля: px, % или ничего
-// let effectName = EFFECTS['none'].EFFECT; // имя эффекта для инлайн-стиля
-// let effectParameter = EFFECTS['none'].PARAM; // параметр эффекта для инлайе стиля: px, % или ничего
+// let effectName = 'none'; // имя эффекта для инлайн-стиля
+// let effectParameter = ''; // параметр эффекта для инлайе стиля: px, % или ничего
+let effectName = EFFECTS['none'].EFFECT; // имя эффекта для инлайн-стиля
+let effectParameter = EFFECTS['none'].PARAM; // параметр эффекта для инлайе стиля: px, % или ничего
 effectLevelContainer.classList.add('hidden'); // скрываем слайдер при загрузке
 
-noUiSlider.create(effectLevelSlider, { // подключаем слайдер
-  range: {
-    min: 0,
-    max: 100
-  },
-  start: 100,
-  step: 1,
-  connect: 'lower'
-});
 // noUiSlider.create(effectLevelSlider, { // подключаем слайдер
 //   range: {
-//     min: EFFECTS['none'].MIN,
-//     max: EFFECTS['none'].MAX
+//     min: 0,
+//     max: 100
 //   },
-//   start: EFFECTS['none'].MAX,
-//   step: EFFECTS['none'].STEP,
+//   start: 100,
+//   step: 1,
 //   connect: 'lower'
 // });
+noUiSlider.create(effectLevelSlider, { // подключаем слайдер
+  range: {
+    min: EFFECTS['none'].MIN,
+    max: EFFECTS['none'].MAX
+  },
+  start: EFFECTS['none'].MAX,
+  step: EFFECTS['none'].STEP,
+  connect: 'lower'
+});
 
 const effectStyle = () => effectName === 'none' ? `${effectName}` : `${effectName}(${effectLevelValue.value}${effectParameter})`; // параметр для инлайн-стиля
 
@@ -88,7 +88,7 @@ const setEffect = (currentEffect) => { // функция установки зн
   effectParameter = EFFECTS[currentEffect].PARAM;
   uploadImagePreview.style.filter = effectStyle();
   if (currentEffect === 'none') {
-    effectLevelContainer.classList.add('hidden'); // для отсутствия эффекта скрываем слайдер
+    effectLevelContainer.classList.add('hidden'); // при отсутствии эффекта скрываем слайдер
   } else {
     effectLevelContainer.classList.remove('hidden');
   }
