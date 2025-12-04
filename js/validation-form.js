@@ -20,7 +20,7 @@ let hashtagsFieldValues = []; // содержимое поля ввода хэш
 let errorHashtagMessage = ''; // сообщение об ошибке
 
 const createErrorHashtagMessage = () => { // функция создания комментария об ошибке
-  hashtagsFieldValues = hashtagsField.value.trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
+  hashtagsFieldValues = hashtagsField.value.toLowerCase().trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
 
   for (const hashtagsFieldValue of hashtagsFieldValues) {
     if (!hashtagRules.test(hashtagsFieldValue)) { // если не прошла валидация хэштэга, то
@@ -48,7 +48,7 @@ const createErrorHashtagMessage = () => { // функция создания к�
 };
 
 const validateHashTagRules = () => {
-  hashtagsFieldValues = hashtagsField.value.trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
+  hashtagsFieldValues = hashtagsField.value.toLowerCase().trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
   let result = true;
 
   if (hashtagsField.value === '') { // хэштэг не обязателен
