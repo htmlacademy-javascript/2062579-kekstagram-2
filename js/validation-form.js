@@ -72,4 +72,7 @@ const validateHashTagRules = () => {
   return result;
 };
 
-export { MAX_COMMENT_LENGTH, pristine, validateComment, createErrorHashtagMessage, validateHashTagRules };
+const pristineValidateComment = () => pristine.addValidator(commentField, validateComment, `Не более ${MAX_COMMENT_LENGTH} символов`); // проверка комментария
+const pristineValidateHashtags = () => pristine.addValidator(hashtagsField, validateHashTagRules, createErrorHashtagMessage); // проверка хэштэгов
+
+export { pristine, pristineValidateComment, pristineValidateHashtags };

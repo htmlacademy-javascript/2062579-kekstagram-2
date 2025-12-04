@@ -2,6 +2,7 @@ import { photosArray } from './interaction-server.js'; // импорт данн�
 
 const NUMBER_OPEN_COMMENTS = 5; // сколько комментариев показываем за один раз
 const body = document.querySelector('body');
+const picturesContainer = document.querySelector('.pictures'); // контейнер с фото
 const bigPicture = document.querySelector('.big-picture'); // блок большого фото
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); // крестик на большом фото
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img'); // изображение большого фото
@@ -96,4 +97,6 @@ const openBigPicture = (evt, array) => { // функция открытия ок
   }
 };
 
-export { openBigPicture };
+const onClickSmallPhoto = () => picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, photosArray));
+
+export { onClickSmallPhoto };

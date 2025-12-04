@@ -108,4 +108,11 @@ const checkEffect = (evt) => { // функция выбора эффекта п�
   }
 };
 
-export { effectStyle, checkEffect };
+const onChangeEffectStyle = () => {
+  effectLevelSlider.noUiSlider.on('update', () => {
+    effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+    uploadImagePreview.style.filter = effectStyle();
+  });
+};
+
+export { checkEffect, onChangeEffectStyle };

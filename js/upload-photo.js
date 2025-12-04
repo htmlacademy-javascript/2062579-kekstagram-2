@@ -5,6 +5,7 @@ import { setFormData } from './interaction-server.js'; // импорт функ�
 
 const body = document.querySelector('body');
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
+const uploadImageInput = uploadImageForm.querySelector('.img-upload__input'); // поле загрузки фото
 const uploadImageOverlay = uploadImageForm.querySelector('.img-upload__overlay'); // окно загрузки комм-я
 const uploadImageCancel = uploadImageForm.querySelector('.img-upload__cancel'); // кнопка закрытия
 const effectsPreviews = uploadImageForm.querySelectorAll('.effects__preview'); // превьюшки в фильтрах
@@ -78,4 +79,6 @@ const openUploadForm = (evt) => { // функция открытия формы
   effectsList.addEventListener('change', checkEffect); // обработчик выбора фильтра
 };
 
-export { closeUploadForm, openUploadForm };
+const onChangeImageInput = () => uploadImageInput.addEventListener('change', openUploadForm);
+
+export { onChangeImageInput };
