@@ -10,6 +10,13 @@ const successMessageTemplate = document.querySelector('#success').content.queryS
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения о неуспешной отправке фото
 const errorGetMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error'); // шаблон сообщения о неуспешной загрузке данных
 
+/* функция закрытия окна сообщения с результатом отправки формы */
+const closeResultMessage = (element) => {
+  document.removeEventListener('keydown', onEscapeDown);
+  document.removeEventListener('click', onWindowClick);
+  element.remove();
+};
+
 /* функция показа сообщения при отправке данных */
 const showSetMessage = (result) => {
   let resultMessage; // элемент с сообщением о результате
@@ -21,7 +28,7 @@ const showSetMessage = (result) => {
   }
   resultMessage.classList.add('result-message');
   const resultButton = resultMessage.querySelector(`.${result}__button`);
-  resultButton.addEventListener('click', () => onButtonCloseMessage(resultMessage));
+  resultButton.addEventListener('click', () => closeResultMessage(resultMessage));
   document.addEventListener('keydown', onEscapeDown);
   document.addEventListener('click', onWindowClick);
   return body.append(resultMessage);
@@ -38,25 +45,12 @@ const showGetMessage = () => {
   return body.append(resultMessage);
 };
 
-/* функция удаления обработчиков в сообщениях об успехе/ошибке */
-const removeListeners = () => {
-  document.removeEventListener('keydown', onEscapeDown);
-  document.removeEventListener('click', onWindowClick);
-};
-
 /* функция закрытия сообщения по эскейпу */
 function onEscapeDown (evt) {
   const resultMessage = document.querySelector('.result-message');
   if (evt.key === 'Escape') {
-    removeListeners();
-    resultMessage.remove();
+    closeResultMessage(resultMessage);
   }
-}
-
-/* функция закрытия сообщения по клику на кнопке */
-function onButtonCloseMessage (element) {
-  removeListeners();
-  element.remove();
 }
 
 /* функция закрытия окна по клику на остальной части окна */
@@ -66,8 +60,7 @@ function onWindowClick (evt) {
     const resultMessageInner = resultMessage.querySelector('div'); // окно с сообщением об успехе
     const isResultMessage = evt.composedPath().includes(resultMessageInner); // проверка, что клик не в окне
     if (!isResultMessage) {
-      removeListeners();
-      resultMessage.remove();
+      closeResultMessage(resultMessage);
     }
   }
 }
