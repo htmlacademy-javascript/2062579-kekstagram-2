@@ -80,7 +80,10 @@ const setFormData = (submitForm) => (evt) => {
       }
     )
       .then( // при успешной отправке
-        () => {
+        (responce) => {
+          if (!responce.ok) {
+            throw new Error;
+          }
           submitForm(); // закрываем форму
           showSetMessage('success');
         }
