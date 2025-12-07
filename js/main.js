@@ -1,4 +1,5 @@
-import { getServerData } from './interaction-server.js'; // импорт данных с сервера
+import { showGetMessage } from './interaction-server.js'; // импорт данных с сервера
+import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { setBigPictureHandlers, onClickSmallPhoto } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
 import { setFormHandlers, onChangeImageInput } from './upload-photo.js'; // импорт функции загрузки изображения
@@ -6,7 +7,7 @@ import { pristineValidateComment, pristineValidateHashtags } from './validation-
 import { onChangeEffectStyle } from './add-effects.js'; // импорт данных для работы слайдера
 
 /* загружаем данные с сервера */
-const photosArray = await getServerData();
+const photosArray = await getServerData(showGetMessage);
 
 /* отрисовываем изображения по данным с сервера */
 createPictures(photosArray);

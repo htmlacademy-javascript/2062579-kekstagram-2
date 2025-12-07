@@ -1,9 +1,6 @@
 import { pristine } from './validation-form';
+import { uploadDataServer } from './api.js';
 
-const SERVER_ADDRESS = {
-  SET: 'https://31.javascript.htmlacademy.pro/kekstagram',
-  GET: 'https://31.javascript.htmlacademy.pro/kekstagram/data'
-};
 const ERROR_MESSAGE_TIMEOUT = 5000; // время показа сообщения об ошибке загрузки данных
 const body = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success'); // шаблон сообщения об успешной отправке фото
@@ -86,12 +83,7 @@ const setFormData = (submitForm) => (evt) => {
     disableSubmitButton(); // блокируем кнопку
     const formData = new FormData(evt.target); // собираем данные из формы
 
-    fetch(SERVER_ADDRESS.SET,
-      {
-        method: 'POST',
-        body: formData
-      }
-    )
+    uploadDataServer(formData)
       .then( // при успешной отправке
         (responce) => {
           if (!responce.ok) {
@@ -114,19 +106,4 @@ const setFormData = (submitForm) => (evt) => {
   }
 };
 
-/* функция получения данных с сервера */
-const getServerData = async () => {
-  let responce;
-  try {
-    responce = await fetch(SERVER_ADDRESS.GET);
-    if (!responce.ok) {
-      showGetMessage();
-    }
-  } catch {
-    showGetMessage();
-  }
-  const serverData = await responce.json();
-  return serverData;
-};
-
-export { getServerData, setFormData };
+export { setFormData, showGetMessage };
