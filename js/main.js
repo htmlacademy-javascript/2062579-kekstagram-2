@@ -1,38 +1,32 @@
-import { createPhotosArray } from './create-photos-array.js'; // импорт функции, генерирующей моковые данные
+import { showGetMessage } from './interaction-server.js'; // импорт данных с сервера
+import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
-import { openBigPicture } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
-import { openUploadForm } from './upload-photo.js'; // импорт функции загрузки изображения
-import { MAX_COMMENT_LENGTH, pristine, validateComment, createErrorHashtagMessage, validateHashTagRules } from './validation-form.js'; // импорт данных валидации полей ввода формы
-import { effectStyle } from './add-effects.js';
+import { setBigPictureHandlers, onClickSmallPhoto } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
+import { setFormHandlers, onChangeImageInput } from './upload-photo.js'; // импорт функции загрузки изображения
+import { pristineValidateComment, pristineValidateHashtags } from './validation-form.js'; // импорт данных валидации полей ввода формы
+import { onChangeEffectStyle } from './add-effects.js'; // импорт данных для работы слайдера
 
-const picturesContainer = document.querySelector('.pictures'); // контейнер с фото
-const effectLevelSlider = document.querySelector('.effect-level__slider'); // слайдер
-const effectLevelValue = document.querySelector('.effect-level__value'); // значение слайдера
-const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
-const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
-const uploadImageInput = uploadImageForm.querySelector('.img-upload__input'); // поле загрузки фото
-const commentField = uploadImageForm.querySelector('.text__description'); // поле ввода комментария
-const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // поле ввода хэштэгов
+/* загружаем данные с сервера */
+const photosArray = await getServerData(showGetMessage);
 
-/* формируем объект с моковыми данными */
-const photosArray = createPhotosArray();
-
-/* отрисовываем изображения */
+/* отрисовываем изображения по данным с сервера */
 createPictures(photosArray);
 
-/* открываем большое фото */
-picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, photosArray));
+/* устанавливаем обработчики кнопок на большом фото */
+setBigPictureHandlers(photosArray);
+
+/* открываем большое фото по клику на маленьких */
+onClickSmallPhoto(photosArray);
+
+/* устанавливаем обработчики кнопок на форме загрузки фото */
+setFormHandlers();
 
 /* открываем форму загрузки фото */
-uploadImageInput.addEventListener('change', (evt) => openUploadForm(evt));
+onChangeImageInput();
 
 /* валидируем поля ввода формы загрузки фото */
-pristine.addValidator(commentField, validateComment, `Не более ${MAX_COMMENT_LENGTH} символов`); // проверка комментария
-pristine.addValidator(hashtagsField, validateHashTagRules, createErrorHashtagMessage); // проверка хэштэгов
+pristineValidateComment(); // проверка комментария
+pristineValidateHashtags(); // проверка хэштэгов
 
-/* слайдер и фильтры */
-effectLevelSlider.noUiSlider.on('update', () => {
-  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-  uploadImagePreview.style.filter = effectStyle();
-});
-
+/* подключаем изменение эффектов и значения слайдера */
+onChangeEffectStyle();

@@ -6,10 +6,8 @@ const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // по�
 const hashtagRules = /^#[a-zа-яё0-9]{1,19}$/i; // регулярное выражение для валидации хэштэга
 
 const pristine = new Pristine(uploadImageForm, {
-  // class of the parent element where the error/success class is added
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
-  // class of the parent element where error text element is appended
   errorTextParent: 'img-upload__field-wrapper'
 });
 
@@ -22,12 +20,12 @@ let hashtagsFieldValues = []; // содержимое поля ввода хэш
 let errorHashtagMessage = ''; // сообщение об ошибке
 
 const createErrorHashtagMessage = () => { // функция создания комментария об ошибке
-  hashtagsFieldValues = hashtagsField.value.trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
+  hashtagsFieldValues = hashtagsField.value.toLowerCase().trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
 
   for (const hashtagsFieldValue of hashtagsFieldValues) {
     if (!hashtagRules.test(hashtagsFieldValue)) { // если не прошла валидация хэштэга, то
       if (hashtagsFieldValue[0] !== '#') {
-        errorHashtagMessage = 'Хэштэг начинается с #';
+        errorHashtagMessage = 'Хэштэг должен начинаться с #';
       } else if (hashtagsFieldValue.length === 1) {
         errorHashtagMessage = 'Хэштэг не может быть из одной #';
       } else if (hashtagsFieldValue.length > 20) {
@@ -41,21 +39,16 @@ const createErrorHashtagMessage = () => { // функция создания к�
     errorHashtagMessage = 'Не больше пяти хэштэгов';
   }
   if (hashtagsFieldValues.length > 1) { // проверка на повторение хэштэгов, если их больше одного
-    for (let i = 0; i < hashtagsFieldValues.length - 1; i++) {
-      const compareHashTag = hashtagsFieldValues[i];
-      for (let j = i + 1; j < hashtagsFieldValues.length; j++) {
-        if (compareHashTag === hashtagsFieldValues[j]) {
-          errorHashtagMessage = 'Хэштеги не должны повторяться';
-          break;
-        }
-      }
+    const unicHashTags = new Set(hashtagsFieldValues);
+    if (unicHashTags.size !== hashtagsFieldValues.length) {
+      errorHashtagMessage = 'Хэштеги не должны повторяться';
     }
   }
   return errorHashtagMessage;
 };
 
 const validateHashTagRules = () => {
-  hashtagsFieldValues = hashtagsField.value.trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
+  hashtagsFieldValues = hashtagsField.value.toLowerCase().trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
   let result = true;
 
   if (hashtagsField.value === '') { // хэштэг не обязателен
@@ -71,21 +64,15 @@ const validateHashTagRules = () => {
     result = false;
   }
   if (hashtagsFieldValues.length > 1) { // проверка на повторение хэштегов
-    for (let i = 0; i < hashtagsFieldValues.length - 1; i++) {
-      const compareHashTag = hashtagsFieldValues[i];
-      for (let j = i + 1; j < hashtagsFieldValues.length; j++) {
-        if (compareHashTag === hashtagsFieldValues[j]) {
-          result = false;
-        }
-      }
+    const unicHashTags = new Set(hashtagsFieldValues);
+    if (unicHashTags.size !== hashtagsFieldValues.length) {
+      result = false;
     }
   }
   return result;
 };
 
-const validateUploadPhotoForm = (evt) => { // валидация формы
-  evt.preventDefault();
-  pristine.validate();
-};
+const pristineValidateComment = () => pristine.addValidator(commentField, validateComment, `Не более ${MAX_COMMENT_LENGTH} символов`); // проверка комментария
+const pristineValidateHashtags = () => pristine.addValidator(hashtagsField, validateHashTagRules, createErrorHashtagMessage); // проверка хэштэгов
 
-export { MAX_COMMENT_LENGTH, pristine, validateComment, createErrorHashtagMessage, validateHashTagRules, validateUploadPhotoForm };
+export { pristine, pristineValidateComment, pristineValidateHashtags };
