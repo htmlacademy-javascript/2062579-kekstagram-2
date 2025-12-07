@@ -19,26 +19,22 @@ const scaleControlBigger = document.querySelector('.scale__control--bigger'); //
 
 const onSubmitForm = setFormData(closeUploadForm); // для передачи в добавление и удаление обработчиков
 
+/* функция установки обработчиков на кнопки модалки формы */
+const setFormHandlers = () => {
+  uploadImageCancel.addEventListener('click', closeUploadForm); // обработчик на крестик (3)
+  uploadImageForm.addEventListener('submit', onSubmitForm); // обработчик валидации формы (3)
+  scaleControlSmaller.addEventListener('click', downPhotoScale); // обработчик кнопки уменьшения масштаба превью (3)
+  scaleControlBigger.addEventListener('click', upPhotoScale); // обработчик кнопки увеличения масштаба превью (3)
+  effectsList.addEventListener('change', checkEffect); // обработчик выбора фильтра (3)
+};
+
 function closeUploadForm () { // функция закрытия формы
   uploadImageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-
-  uploadImageCancel.removeEventListener('click', closeUploadForm); // снятие обработчика с крестика
-
   document.removeEventListener('keydown', onEscapeDown); // снятие обработчика с эскейпа
-
-  uploadImageForm.removeEventListener('submit', onSubmitForm); // удаление обработчика отправки формы
-
   uploadImageForm.reset(); // сброс полей формы
-
   pristine.reset(); // сброс валидации
-
-  scaleControlSmaller.removeEventListener('click', downPhotoScale); // снятие обработчика кнопки уменьшения масштаба превью
-  scaleControlBigger.removeEventListener('click', upPhotoScale); // снятие обработчика кнопки увеличения масштаба превью
-
   uploadImagePreview.style.scale = `${SCALE_PARAMETERS.MAX}%`; // сброс значения масштаба превью
-
-  effectsList.removeEventListener('change', checkEffect); // снятие обработчика выбора фильтров
   uploadImagePreview.removeAttribute('style'); // сброс стилей фильтра
   effectLevelContainer.classList.add('hidden'); // скрытие слайдера
 }
@@ -57,28 +53,15 @@ function onEscapeDown (evt) { // функция закрытия окна по �
 const openUploadForm = (evt) => { // функция открытия формы
   uploadImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  /* следующие две строки потребовались, чтобы обойти ошибку 'not allowed to load local resource' */
   const file = evt.target.files[0];
   const source = URL.createObjectURL(file);
-
   uploadImagePreview.src = source; // подставляем загруженное фото в превью
-
   effectsPreviews.forEach((effectsPreview) => { // и в превьюшки эффектов
     effectsPreview.style.backgroundImage = `url(${source})`;
   });
-
-  uploadImageCancel.addEventListener('click', closeUploadForm); // обработчик на крестик
-
   document.addEventListener('keydown', onEscapeDown); // обработчик на эскейп
-
-  uploadImageForm.addEventListener('submit', onSubmitForm); // обработчик валидации формы
-
-  scaleControlSmaller.addEventListener('click', downPhotoScale); // обработчик кнопки уменьшения масштаба превью
-  scaleControlBigger.addEventListener('click', upPhotoScale); // обработчик кнопки увеличения масштаба превью
-
-  effectsList.addEventListener('change', checkEffect); // обработчик выбора фильтра
 };
 
 const onChangeImageInput = () => uploadImageInput.addEventListener('change', openUploadForm);
 
-export { onChangeImageInput };
+export { setFormHandlers, onChangeImageInput };

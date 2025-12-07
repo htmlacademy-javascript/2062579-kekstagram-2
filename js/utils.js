@@ -11,4 +11,29 @@ const createId = (start = 0) => {
   return () => lastCreateId++;
 };
 
-export { getRandomNumber, createId };
+/* функция debounce */
+const debounce = (cb, timeOut) => {
+  let timeOutId;
+  return (...rest) => {
+    clearTimeout(timeOutId);
+    timeOutId = setTimeout(() => {
+      cb(rest);
+    }, timeOut);
+  };
+};
+
+/* функция throttle */
+const throttle = (cb, timeOut) => {
+  let timeOutId = null;
+  return (...rest) => {
+    if (timeOutId) {
+      return;
+    }
+    timeOutId = setTimeout(() => {
+      cb(rest);
+      timeOutId = null;
+    }, timeOut);
+  };
+};
+
+export { getRandomNumber, createId, debounce, throttle };

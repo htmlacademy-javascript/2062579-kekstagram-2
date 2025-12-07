@@ -1,5 +1,3 @@
-import { photosArray } from './interaction-server.js'; // импорт данных с сервера
-
 const NUMBER_OPEN_COMMENTS = 5; // сколько комментариев показываем за один раз
 const body = document.querySelector('body');
 const picturesContainer = document.querySelector('.pictures'); // контейнер с фото
@@ -28,10 +26,10 @@ const createCommentsListItem = (comment) => {
 };
 
 /* функция управления блоком комментариев */
-const manageComments = () => {
+const manageComments = (array) => {
   const id = bigPictureImg.dataset.id; // определяем к какому именно объекту данных нужно обращаться
   const socialCommentsFragment = document.createDocumentFragment(); // фрагмент для комментариев
-  const workArray = photosArray[id].comments; // массив с комментами в объекте данных
+  const workArray = array[id].comments; // массив с комментами в объекте данных
   let isOpenComments = socialCommentsCollection.length; // количество уже показанных комм-в
 
   socialCommentShownCount.textContent = isOpenComments; // записываем сколько комм-в показано
@@ -47,20 +45,19 @@ const manageComments = () => {
   socialCommentShownCount.textContent = isOpenComments; // и отображаем это кол-во
   if (isOpenComments === workArray.length) {
     commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если все комментарии показаны
-    commentsLoader.removeEventListener('click', manageComments); // и снять с нее обработчик
   }
 };
 
 const closeBigPicture = () => { // функция закрытия окна
   bigPicture.classList.add('hidden'); // закрыть окно
-
   body.classList.remove('modal-open');
-
-  commentsLoader.removeEventListener('click', manageComments); // снять обработчик с кнопки дозагрузки комм-в
-
-  bigPictureCancel.removeEventListener('click', closeBigPicture); // снять обработчик с крестика
-
   document.removeEventListener('keydown', onEscapeDown); // снять обработчик с эскейпа
+};
+
+/* функция установки обработчиков на кнопки модалки с большим фото */
+const setBigPictureHandlers = (array) => {
+  commentsLoader.addEventListener('click', () => manageComments(array)); // вешаем обработчик на кнопку загрузки комм-в
+  bigPictureCancel.addEventListener('click', closeBigPicture); // повесить обработчик на крестик
 };
 
 function onEscapeDown (evt) { // функция закрытия окна по эскейпу
@@ -77,26 +74,20 @@ const packBigPictureData = (array, id) => { // функция заполнени
   likesCount.textContent = array[id].likes;
   socialComments.innerHTML = '';
   commentsLoader.classList.remove('hidden');
-  manageComments();
+  manageComments(array);
 };
 
 const openBigPicture = (evt, array) => { // функция открытия окна
   if (evt.target.matches('.picture__img')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно
-
     const index = evt.target.dataset.id; // определяем какой индекс у элемента, по которому кликнули, в объекте
     packBigPictureData(array, index); // заполняем модальное окно данными большого фото из объекта
     body.classList.add('modal-open');
-
-    commentsLoader.addEventListener('click', manageComments); // вешаем обработчик на кнопку загрузки комм-в
-
-    bigPictureCancel.addEventListener('click', closeBigPicture); // повесить обработчик на крестик
-
     document.addEventListener('keydown', onEscapeDown); // повесить обработчик на эскейп
   }
 };
 
-const onClickSmallPhoto = () => picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, photosArray));
+const onClickSmallPhoto = (array) => picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, array));
 
-export { onClickSmallPhoto };
+export { setBigPictureHandlers, onClickSmallPhoto };

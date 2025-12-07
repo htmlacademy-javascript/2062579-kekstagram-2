@@ -9,6 +9,7 @@ const body = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success'); // шаблон сообщения об успешной отправке фото
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения о неуспешной отправке фото
 const errorGetMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error'); // шаблон сообщения о неуспешной загрузке данных
+const uploadSubmitButton = document.querySelector('.img-upload__submit'); // кнопка отправки формы
 
 /* функция закрытия окна сообщения с результатом отправки формы */
 const closeResultMessage = (element) => {
@@ -65,12 +66,24 @@ function onWindowClick (evt) {
   }
 }
 
+/* функция блокировки кнопки отправки формы */
+const disableSubmitButton = () => {
+  uploadSubmitButton.disabled = true;
+  uploadSubmitButton.textContent = 'Публикуется';
+};
+/* функция разблокировки кнопки отправки формы */
+const unDisableSubmitButton = () => {
+  uploadSubmitButton.disabled = false;
+  uploadSubmitButton.textContent = 'Опубликовать';
+};
+
 /* функция отправки данных на сервер */
 const setFormData = (submitForm) => (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate(); // валидация полей формы
 
   if (isValid) {
+    disableSubmitButton(); // блокируем кнопку
     const formData = new FormData(evt.target); // собираем данные из формы
 
     fetch(SERVER_ADDRESS.SET,
@@ -92,6 +105,11 @@ const setFormData = (submitForm) => (evt) => {
         () => {
           showSetMessage('error');
         }
+      )
+      .finally(
+        () => {
+          unDisableSubmitButton(); // разблокируем кнопку
+        }
       );
   }
 };
@@ -111,7 +129,4 @@ const getServerData = async () => {
   return serverData;
 };
 
-/* загружаем данные с сервера */
-const photosArray = await getServerData();
-
-export { setFormData, photosArray };
+export { getServerData, setFormData };

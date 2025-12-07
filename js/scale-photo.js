@@ -24,4 +24,4 @@ const upPhotoScale = () => {
   }
 };
 
-export { SCALE_PARAMETERS, scaleControlValue, downPhotoScale, upPhotoScale };
+export { SCALE_PARAMETERS, downPhotoScale, upPhotoScale };
