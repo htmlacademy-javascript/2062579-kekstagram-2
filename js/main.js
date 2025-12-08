@@ -1,4 +1,4 @@
-import { showErrorMessage, getUnicRandomIds, debounce } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { showErrorMessage, getUnicRandomIds, throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
 import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { setBigPictureHandlers, onClickSmallPhoto } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
@@ -81,31 +81,12 @@ const randomiser = (n, start, array) => {
   return randomArray;
 };
 
-/* функция выбора фильтра */ // перенос и экспорт
-// const checkFilter = (evt) => {
-//   const checkedFilter = evt.target; // определяем по какой кнопке кликнули
-//   for (const element of FilterButtons) { // убираем у всех кнопок активный стиль
-//     element.classList.remove('img-filters__button--active');
-//   }
-//   checkedFilter.classList.add('img-filters__button--active'); // вешаем на выбранную кнопку активный стиль
-//   let randomArray1 = []; // массив для 10 случайных фото
-//   const randomArray2 = photosArray.slice().sort(comparePictureLikes); // сортированный по лайкам массив
-//   switch (checkedFilter.id) { // выбираем какой массив отрисовать
-//     case 'filter-default':
-//       removePictures(); // стираем все фото
-//       createPictures(photosArray); // отрисовываем новые
-//       break;
-//     case 'filter-random':
-//       randomArray1 = randomiser(10, 0, photosArray.length - 1); // отбираем случайные фото
-//       removePictures();
-//       createPictures(randomArray1);
-//       break;
-//     case 'filter-discussed':
-//       removePictures();
-//       createPictures(randomArray2);
-//       break;
-//   }
-// };
+/* функция перерисовки фильтрованных фото */ // перенос
+const rerender = (array) => {
+  removePictures(); // стираем все фото
+  createPictures(array); // отрисовываем новые
+};
+
 /* функция выбора фильтра */ // перенос
 const checkFilter = (array) => (evt) => {
   const checkedFilter = evt.target; // определяем по какой кнопке кликнули
@@ -113,21 +94,19 @@ const checkFilter = (array) => (evt) => {
     element.classList.remove('img-filters__button--active');
   }
   checkedFilter.classList.add('img-filters__button--active'); // вешаем на выбранную кнопку активный стиль
-  let randomArray1 = []; // массив для 10 случайных фото
-  const randomArray2 = array.slice().sort(comparePictureLikes); // сортированный по лайкам массив
+  let randomArray = []; // массив для 10 случайных фото
+  const sortedArray = array.slice().sort(comparePictureLikes); // сортированный по лайкам массив
+
   switch (checkedFilter.id) { // выбираем какой массив отрисовать
     case 'filter-default':
-      removePictures(); // стираем все фото
-      createPictures(array); // отрисовываем новые
+      rerender(array);
       break;
     case 'filter-random':
-      randomArray1 = randomiser(10, 0, array); // отбираем случайные фото
-      removePictures();
-      createPictures(randomArray1);
+      randomArray = randomiser(10, 0, array); // отбираем случайные фото
+      rerender(randomArray);
       break;
     case 'filter-discussed':
-      removePictures();
-      createPictures(randomArray2);
+      rerender(sortedArray);
       break;
   }
 };
@@ -135,8 +114,7 @@ const checkFilter = (array) => (evt) => {
 const onChangeFilter = checkFilter(photosArray);
 
 /* функция установки обработчика на выбор фильтра */ // перенос и экспорт
-// imgFiltersForm.addEventListener('click', checkFilter); // (1)
-const setFilterChange = () => imgFiltersForm.addEventListener('click', onChangeFilter); // (1)
+const setFilterChange = () => imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500)); // (1)
 
 /* установка обработчика на выбор фильтра */ // остается и импорт
 setFilterChange();

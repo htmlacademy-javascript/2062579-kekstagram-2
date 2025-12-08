@@ -27,12 +27,6 @@ const getUnicRandomIds = (min, max) => {
   };
 };
 
-// /* функция генерации id, по умолчанию начинается с 0 */
-// const createId = (start = 0) => {
-//   let lastCreateId = start;
-//   return () => lastCreateId++;
-// };
-
 /* функция показа сообщения при ошибке */
 const showErrorMessage = (text, timeOut = ERROR_MESSAGE_TIMEOUT) => {
   const resultMessage = errorGetMessageTemplate.cloneNode(true);
@@ -53,7 +47,7 @@ const debounce = (cb, timeOut) => {
   return (...rest) => {
     clearTimeout(timeOutId);
     timeOutId = setTimeout(() => {
-      cb(rest);
+      cb.apply(this, rest);
     }, timeOut);
   };
 };
@@ -66,7 +60,7 @@ const throttle = (cb, timeOut) => {
       return;
     }
     timeOutId = setTimeout(() => {
-      cb(rest);
+      cb.apply(this, rest);
       timeOutId = null;
     }, timeOut);
   };
