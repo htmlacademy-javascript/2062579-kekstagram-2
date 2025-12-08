@@ -9,6 +9,27 @@ const getRandomNumber = (a, b) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+/* функция генерации уникальных случайных значений из диапазона */
+const getUnicRandomIds = (min, max) => {
+  const arrayUnicRandomIds = [];
+  return function () {
+    let newId = getRandomNumber(min, max);
+
+    if (arrayUnicRandomIds.length >= (max - min + 1)) {
+      return null;
+    }
+
+    while (arrayUnicRandomIds.includes(newId)) {
+      newId = getRandomNumber(min, max);
+    }
+    arrayUnicRandomIds.push(newId);
+    return newId;
+  };
+};
+
+// const getUnicRandomPictureIds = getUnicRandomIds(0, 24);
+
+
 /* функция генерации id, по умолчанию начинается с 0 */
 const createId = (start = 0) => {
   let lastCreateId = start;
@@ -54,4 +75,4 @@ const throttle = (cb, timeOut) => {
   };
 };
 
-export { getRandomNumber, createId, showErrorMessage, debounce, throttle };
+export { getRandomNumber, createId, showErrorMessage, debounce, throttle, getUnicRandomIds };

@@ -1,4 +1,4 @@
-import { showErrorMessage } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { showErrorMessage, getUnicRandomIds } from './utils.js'; // импорт функции вызова сообщения об ошибке
 import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { setBigPictureHandlers, onClickSmallPhoto } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
@@ -56,6 +56,29 @@ const removePictures = () => {
   });
 };
 
+/* функция сортировки массива по убыванию */
+const comparePictureLikes = (elementA, elementB) => elementB.likes - elementA.likes;
+
+/* функция получения заданного числа уникальных ID из диапазона */
+const getArrayNIds = (n, a, b) => {
+  const arrayNIds = [];
+  const getUnicRandomPictureIds = getUnicRandomIds(a, b);
+  for (let i = 0; i < n; i++) {
+    const newId = getUnicRandomPictureIds();
+    arrayNIds.push(newId);
+  }
+  return arrayNIds;
+};
+
+const randomiser = () => {
+  const nIdsArray = getArrayNIds(10, 0, photosArray.length - 1);
+  const randomArray = [];
+  nIdsArray.forEach((elem) => {
+    randomArray.push(photosArray[elem]);
+  });
+  return randomArray;
+};
+
 /* функция выбора фильтра */
 const checkFilter = (evt) => {
   const checkedFilter = evt.target;
@@ -63,9 +86,8 @@ const checkFilter = (evt) => {
     element.classList.remove('img-filters__button--active');
   }
   checkedFilter.classList.add('img-filters__button--active');
-
-  const randomArray1 = [photosArray[0], photosArray[1],photosArray[2],photosArray[3]];
-  const randomArray2 = [photosArray[21], photosArray[22],photosArray[23],photosArray[24]];
+  let randomArray1 = [];
+  const randomArray2 = photosArray.slice().sort(comparePictureLikes);
   switch (checkedFilter.id) {
     case 'filter-default':
       removePictures();
@@ -73,6 +95,7 @@ const checkFilter = (evt) => {
 
       break;
     case 'filter-random':
+      randomArray1 = randomiser();
       removePictures();
       createPictures(randomArray1);
 
