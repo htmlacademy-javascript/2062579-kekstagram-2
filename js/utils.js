@@ -66,4 +66,15 @@ const throttle = (cb, timeOut) => {
   };
 };
 
-export { getRandomNumber, showErrorMessage, debounce, throttle, getUnicRandomIds };
+/* функция получения заданного числа уникальных ID из диапазона */
+const getArrayNIds = (n, a, b) => {
+  const arrayNIds = [];
+  const getUnicRandomPictureIds = getUnicRandomIds(a, b);
+  for (let i = 0; i < n; i++) {
+    const newId = getUnicRandomPictureIds();
+    arrayNIds.push(newId);
+  }
+  return arrayNIds;
+};
+
+export { getRandomNumber, showErrorMessage, debounce, throttle, getUnicRandomIds, getArrayNIds };

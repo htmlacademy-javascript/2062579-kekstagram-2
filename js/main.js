@@ -1,10 +1,14 @@
-import { showErrorMessage, getUnicRandomIds, throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { showErrorMessage, /*getUnicRandomIds,*/ throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
 import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { setBigPictureHandlers, onClickSmallPhoto } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
 import { setFormHandlers, onChangeImageInput } from './upload-photo.js'; // импорт функции загрузки изображения
 import { pristineValidateComment, pristineValidateHashtags } from './validation-form.js'; // импорт данных валидации полей ввода формы
 import { onChangeEffectStyle } from './add-effects.js'; // импорт данных для работы слайдера
+import { showFilterButtons, checkFilter } from './filter-pictures.js'; // импорт функций для фильтрации фото
+
+const imgFilters = document.querySelector('.img-filters'); // блок с фильтрами
+const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // форма
 
 /* загружаем данные с сервера */
 const photosArray = await getServerData(showErrorMessage);
@@ -31,90 +35,14 @@ pristineValidateHashtags(); // проверка хэштэгов
 /* подключаем изменение эффектов и значения слайдера */
 onChangeEffectStyle();
 
-/* фильтры изображений */ // перенос
-const imgFilters = document.querySelector('.img-filters'); // блок с фильтрами
-const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // форма
-const FilterButtons = imgFiltersForm.children; // все кнопки формы
-const picturesList = document.querySelector('.pictures'); // список с фотографиями
-let picturesListItemsAll = picturesList.querySelectorAll('.picture');
-
-/* функция показа фильтров */ // перенос и экспорт
-const showFilterButtons = (condition) => {
-  if(condition) {
-    imgFilters.classList.remove('img-filters--inactive');
-  }
-};
-/* показываем фильтры */ // остается, импорт
+/* показываем фильтры */
 showFilterButtons(photosArray);
 
-/* функция удаления изображений */ // перенос
-const removePictures = () => {
-  picturesListItemsAll = picturesList.querySelectorAll('.picture');
-  picturesListItemsAll.forEach((picturesListItem) => {
-    if (picturesListItem.classList.contains('picture')) {
-      picturesListItem.remove();
-    }
-  });
-};
-
-/* функция сортировки массива по убыванию */ // перенос в utils и экспорт
-const comparePictureLikes = (elementA, elementB) => elementB.likes - elementA.likes;
-
-/* функция получения заданного числа уникальных ID из диапазона */ // перенос в utils и экспорт
-const getArrayNIds = (n, a, b) => {
-  const arrayNIds = [];
-  const getUnicRandomPictureIds = getUnicRandomIds(a, b);
-  for (let i = 0; i < n; i++) {
-    const newId = getUnicRandomPictureIds();
-    arrayNIds.push(newId);
-  }
-  return arrayNIds;
-};
-
-/* */ // перенос
-const randomiser = (n, start, array) => {
-  const nIdsArray = getArrayNIds(n, start, array.length - 1);
-  const randomArray = [];
-  nIdsArray.forEach((elem) => {
-    randomArray.push(array[elem]);
-  });
-  return randomArray;
-};
-
-/* функция перерисовки фильтрованных фото */ // перенос
-const rerender = (array) => {
-  removePictures(); // стираем все фото
-  createPictures(array); // отрисовываем новые
-};
-
-/* функция выбора фильтра */ // перенос
-const checkFilter = (array) => (evt) => {
-  const checkedFilter = evt.target; // определяем по какой кнопке кликнули
-  for (const element of FilterButtons) { // убираем у всех кнопок активный стиль
-    element.classList.remove('img-filters__button--active');
-  }
-  checkedFilter.classList.add('img-filters__button--active'); // вешаем на выбранную кнопку активный стиль
-  let randomArray = []; // массив для 10 случайных фото
-  const sortedArray = array.slice().sort(comparePictureLikes); // сортированный по лайкам массив
-
-  switch (checkedFilter.id) { // выбираем какой массив отрисовать
-    case 'filter-default':
-      rerender(array);
-      break;
-    case 'filter-random':
-      randomArray = randomiser(10, 0, array); // отбираем случайные фото
-      rerender(randomArray);
-      break;
-    case 'filter-discussed':
-      rerender(sortedArray);
-      break;
-  }
-};
-/* функция-обработчик выбора фильтра */ // перенос
+/* функция-обработчик выбора фильтра */
 const onChangeFilter = checkFilter(photosArray);
 
-/* функция установки обработчика на выбор фильтра */ // перенос и экспорт
-const setFilterChange = () => imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500)); // (1)
+/* функция установки обработчика на выбор фильтра */
+const setFilterChange = () => imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500));
 
-/* установка обработчика на выбор фильтра */ // остается и импорт
+/* установка обработчика на выбор фильтра */
 setFilterChange();
