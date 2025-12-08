@@ -92,18 +92,15 @@ const checkFilter = (evt) => {
     case 'filter-default':
       removePictures();
       createPictures(photosArray);
-
       break;
     case 'filter-random':
       randomArray1 = randomiser();
       removePictures();
       createPictures(randomArray1);
-
       break;
     case 'filter-discussed':
       removePictures();
       createPictures(randomArray2);
-
       break;
   }
 };
