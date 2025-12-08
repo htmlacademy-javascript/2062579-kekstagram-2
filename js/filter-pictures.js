@@ -28,7 +28,7 @@ const removePictures = () => {
   });
 };
 
-/* функция отбора N-случайных элементов */
+/* функция отбора N-случайных элементов из массива */
 const randomiser = (n, start, array) => {
   const nIdsArray = getArrayNIds(n, start, array.length - 1);
   const randomArray = [];
@@ -68,9 +68,4 @@ const checkFilter = (array) => (evt) => {
   }
 };
 
-/* функция-обработчик выбора фильтра */ // перенос
-// const onChangeFilter = checkFilter(photosArray);
-/* функция установки обработчика на выбор фильтра */ // перенос и экспорт
-// const setFilterChange = () => imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500)); // (1)
-
-export { showFilterButtons, checkFilter, /*setFilterChange*/ };
+export { showFilterButtons, checkFilter };

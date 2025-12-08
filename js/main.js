@@ -1,4 +1,4 @@
-import { showErrorMessage, /*getUnicRandomIds,*/ throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { showErrorMessage, throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
 import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { setBigPictureHandlers, onClickSmallPhoto } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
@@ -37,15 +37,6 @@ onChangeEffectStyle();
 
 /* показываем фильтры */
 showFilterButtons(photosArray);
-
-/* функция-обработчик выбора фильтра */
-// const onChangeFilter = checkFilter(photosArray);
-
-/* функция установки обработчика на выбор фильтра */
-// const setFilterChange = () => imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500));
-
-/* установка обработчика на выбор фильтра */
-// setFilterChange();
 
 /* функция-обработчик выбора фильтра */
 const onChangeFilter = checkFilter(photosArray);
