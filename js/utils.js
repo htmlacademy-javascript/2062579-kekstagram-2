@@ -27,14 +27,11 @@ const getUnicRandomIds = (min, max) => {
   };
 };
 
-// const getUnicRandomPictureIds = getUnicRandomIds(0, 24);
-
-
-/* функция генерации id, по умолчанию начинается с 0 */
-const createId = (start = 0) => {
-  let lastCreateId = start;
-  return () => lastCreateId++;
-};
+// /* функция генерации id, по умолчанию начинается с 0 */
+// const createId = (start = 0) => {
+//   let lastCreateId = start;
+//   return () => lastCreateId++;
+// };
 
 /* функция показа сообщения при ошибке */
 const showErrorMessage = (text, timeOut = ERROR_MESSAGE_TIMEOUT) => {
@@ -75,4 +72,4 @@ const throttle = (cb, timeOut) => {
   };
 };
 
-export { getRandomNumber, createId, showErrorMessage, debounce, throttle, getUnicRandomIds };
+export { getRandomNumber, showErrorMessage, debounce, throttle, getUnicRandomIds };
