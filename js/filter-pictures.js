@@ -28,7 +28,7 @@ const removePictures = () => {
   });
 };
 
-/* */
+/* функция отбора N-случайных элементов */
 const randomiser = (n, start, array) => {
   const nIdsArray = getArrayNIds(n, start, array.length - 1);
   const randomArray = [];
