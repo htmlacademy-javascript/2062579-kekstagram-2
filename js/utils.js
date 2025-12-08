@@ -1,3 +1,7 @@
+const ERROR_MESSAGE_TIMEOUT = 5000; // время показа сообщения об ошибке загрузки данных
+const body = document.querySelector('body');
+const errorGetMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error'); // шаблон сообщения о неуспешной загрузке данных
+
 /* функция получения случайного числа в диапазоне от А до В */
 const getRandomNumber = (a, b) => {
   const min = Math.min(a, b);
@@ -9,6 +13,20 @@ const getRandomNumber = (a, b) => {
 const createId = (start = 0) => {
   let lastCreateId = start;
   return () => lastCreateId++;
+};
+
+/* функция показа сообщения при ошибке */
+const showErrorMessage = (text, timeOut = ERROR_MESSAGE_TIMEOUT) => {
+  const resultMessage = errorGetMessageTemplate.cloneNode(true);
+  const resultMessageTitle = resultMessage.querySelector('.data-error__title'); // заголовок сообщения об ошибке
+  if (text) { // если передан параметр с текстом, то меняем текст
+    resultMessageTitle.textContent = text;
+  }
+  setTimeout(() => { // установка времени показа сообщения
+    resultMessage.remove();
+  }, timeOut);
+
+  return body.append(resultMessage);
 };
 
 /* функция debounce */
@@ -36,4 +54,4 @@ const throttle = (cb, timeOut) => {
   };
 };
 
-export { getRandomNumber, createId, debounce, throttle };
+export { getRandomNumber, createId, showErrorMessage, debounce, throttle };

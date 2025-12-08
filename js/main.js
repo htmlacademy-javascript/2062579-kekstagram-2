@@ -1,4 +1,4 @@
-import { showGetMessage } from './interaction-server.js'; // импорт данных с сервера
+import { showErrorMessage } from './utils.js'; // импорт функции вызова сообщения об ошибке
 import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { setBigPictureHandlers, onClickSmallPhoto } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
@@ -7,7 +7,7 @@ import { pristineValidateComment, pristineValidateHashtags } from './validation-
 import { onChangeEffectStyle } from './add-effects.js'; // импорт данных для работы слайдера
 
 /* загружаем данные с сервера */
-const photosArray = await getServerData(showGetMessage);
+const photosArray = await getServerData(showErrorMessage);
 
 /* отрисовываем изображения по данным с сервера */
 createPictures(photosArray);

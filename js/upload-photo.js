@@ -2,10 +2,16 @@ import { pristine } from './validation-form.js'; // импорт данных в
 import { SCALE_PARAMETERS, downPhotoScale, upPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
 import { checkEffect } from './add-effects.js'; // импорт данных работы фильтров
 import { setFormData } from './interaction-server.js'; // импорт функции отправки данных на сервер
+import { showErrorMessage } from './utils.js';
 
+const ALLOWED_FILES = ['jpg', 'jpeg', 'png', 'svg', 'webp']; // разрешенные типы файлов для загрузки
+const NOT_ALLOWED_FILE = { // параметры сообщения при выборе неверного типа файла
+  TEXT: 'Выберите файл с изображением: jpg, png, svg или webp',
+  TIMEOUT: 4000
+};
 const body = document.querySelector('body');
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
-const uploadImageInput = uploadImageForm.querySelector('.img-upload__input'); // поле загрузки фото
+const uploadImageInput = uploadImageForm.querySelector('#upload-file'); // поле загрузки фото
 const uploadImageOverlay = uploadImageForm.querySelector('.img-upload__overlay'); // окно загрузки комм-я
 const uploadImageCancel = uploadImageForm.querySelector('.img-upload__cancel'); // кнопка закрытия
 const effectsPreviews = uploadImageForm.querySelectorAll('.effects__preview'); // превьюшки в фильтрах
@@ -34,7 +40,11 @@ function closeUploadForm () { // функция закрытия формы
   document.removeEventListener('keydown', onEscapeDown); // снятие обработчика с эскейпа
   uploadImageForm.reset(); // сброс полей формы
   pristine.reset(); // сброс валидации
+  uploadImagePreview.src = 'img/upload-default-image.jpg'; // сброс превью
   uploadImagePreview.style.scale = `${SCALE_PARAMETERS.MAX}%`; // сброс значения масштаба превью
+  effectsPreviews.forEach((effectsPreview) => { // сброс превьюшек эффектов
+    effectsPreview.style.backgroundImage = '';
+  });
   uploadImagePreview.removeAttribute('style'); // сброс стилей фильтра
   effectLevelContainer.classList.add('hidden'); // скрытие слайдера
 }
@@ -54,11 +64,20 @@ const openUploadForm = (evt) => { // функция открытия формы
   uploadImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   const file = evt.target.files[0];
-  const source = URL.createObjectURL(file);
-  uploadImagePreview.src = source; // подставляем загруженное фото в превью
-  effectsPreviews.forEach((effectsPreview) => { // и в превьюшки эффектов
-    effectsPreview.style.backgroundImage = `url(${source})`;
-  });
+
+  const fileName = file.name.toLowerCase(); // готовим проверку на тип файла
+  const checkFileType = ALLOWED_FILES.some((fileType) => fileName.endsWith(fileType));
+
+  if (checkFileType) {
+    const source = URL.createObjectURL(file);
+    uploadImagePreview.src = source; // подставляем загруженное фото в превью
+    effectsPreviews.forEach((effectsPreview) => { // и в превьюшки эффектов
+      effectsPreview.style.backgroundImage = `url(${source})`;
+    });
+  } else {
+    closeUploadForm(); // если выбран не подходящий тип файла закрываем форму
+    showErrorMessage(NOT_ALLOWED_FILE.TEXT, NOT_ALLOWED_FILE.TIMEOUT);
+  }
   document.addEventListener('keydown', onEscapeDown); // обработчик на эскейп
 };
 
