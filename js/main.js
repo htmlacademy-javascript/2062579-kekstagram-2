@@ -39,10 +39,17 @@ onChangeEffectStyle();
 showFilterButtons(photosArray);
 
 /* функция-обработчик выбора фильтра */
-const onChangeFilter = checkFilter(photosArray);
+// const onChangeFilter = checkFilter(photosArray);
 
 /* функция установки обработчика на выбор фильтра */
-const setFilterChange = () => imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500));
+// const setFilterChange = () => imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500));
 
 /* установка обработчика на выбор фильтра */
-setFilterChange();
+// setFilterChange();
+
+/* функция-обработчик выбора фильтра */
+const onChangeFilter = checkFilter(photosArray);
+
+/* установка обработчика на выбор фильтра */
+imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500));
+
