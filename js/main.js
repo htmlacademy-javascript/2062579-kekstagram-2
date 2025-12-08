@@ -30,3 +30,60 @@ pristineValidateHashtags(); // проверка хэштэгов
 
 /* подключаем изменение эффектов и значения слайдера */
 onChangeEffectStyle();
+
+/* фильтры изображений */
+const imgFilters = document.querySelector('.img-filters'); // блок с фильтрами
+const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // форма
+const FilterButtons = imgFiltersForm.children; // все кнопки формы
+// const filterDefault = imgFiltersForm.querySelector('#filter-default'); // кнопка по-умолчанию
+// const filterRandom = imgFiltersForm.querySelector('#filter-random'); // кнопка рандома
+// const filterDiscussed = imgFiltersForm.querySelector('#filter-discussed'); // кнопка обсуждаемых
+const picturesList = document.querySelector('.pictures'); // список с фотографиями
+// const picturesListItems = picturesList.children;
+let picturesListItemsAll = picturesList.querySelectorAll('.picture');
+
+if(photosArray) {
+  imgFilters.classList.remove('img-filters--inactive');
+}
+
+/* функция удаления изображений */
+const removePictures = () => {
+  picturesListItemsAll = picturesList.querySelectorAll('.picture');
+  picturesListItemsAll.forEach((picturesListItem) => {
+    if (picturesListItem.classList.contains('picture')) {
+      picturesListItem.remove();
+    }
+  });
+};
+
+/* функция выбора фильтра */
+const checkFilter = (evt) => {
+  const checkedFilter = evt.target;
+  for (const element of FilterButtons) {
+    element.classList.remove('img-filters__button--active');
+  }
+  checkedFilter.classList.add('img-filters__button--active');
+
+  const randomArray1 = [photosArray[0], photosArray[1],photosArray[2],photosArray[3]];
+  const randomArray2 = [photosArray[21], photosArray[22],photosArray[23],photosArray[24]];
+  switch (checkedFilter.id) {
+    case 'filter-default':
+      removePictures();
+      createPictures(photosArray);
+
+      break;
+    case 'filter-random':
+      removePictures();
+      createPictures(randomArray1);
+
+      break;
+    case 'filter-discussed':
+      removePictures();
+      createPictures(randomArray2);
+
+      break;
+  }
+};
+
+imgFiltersForm.addEventListener('click', checkFilter);
+
