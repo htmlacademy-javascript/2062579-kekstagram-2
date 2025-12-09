@@ -7,7 +7,7 @@ const errorMessageTemplate = document.querySelector('#error').content.querySelec
 const uploadSubmitButton = document.querySelector('.img-upload__submit'); // кнопка отправки формы
 
 /* функция закрытия окна сообщения с результатом отправки формы */
-const closeResultMessage = (element) => {
+const onClickResultButton = (element) => {
   document.removeEventListener('keydown', onEscapeDown);
   document.removeEventListener('click', onWindowClick);
   element.remove();
@@ -24,7 +24,7 @@ const showSetMessage = (result) => {
   }
   resultMessage.classList.add('result-message');
   const resultButton = resultMessage.querySelector(`.${result}__button`);
-  resultButton.addEventListener('click', () => closeResultMessage(resultMessage));
+  resultButton.addEventListener('click', () => onClickResultButton(resultMessage));
   document.addEventListener('keydown', onEscapeDown);
   document.addEventListener('click', onWindowClick);
   return body.append(resultMessage);
@@ -34,7 +34,7 @@ const showSetMessage = (result) => {
 function onEscapeDown (evt) {
   const resultMessage = document.querySelector('.result-message');
   if (evt.key === 'Escape') {
-    closeResultMessage(resultMessage);
+    onClickResultButton(resultMessage);
   }
 }
 
@@ -45,7 +45,7 @@ function onWindowClick (evt) {
     const resultMessageInner = resultMessage.querySelector('div'); // окно с сообщением об успехе
     const isResultMessage = evt.composedPath().includes(resultMessageInner); // проверка, что клик не в окне
     if (!isResultMessage) {
-      closeResultMessage(resultMessage);
+      onClickResultButton(resultMessage);
     }
   }
 }

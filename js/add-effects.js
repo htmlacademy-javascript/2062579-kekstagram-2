@@ -83,7 +83,7 @@ const setEffect = (currentEffect) => { // функция установки зн
   }
 };
 
-const checkEffect = (evt) => { // функция выбора эффекта при клике по превьюшке
+const onChangeEffect = (evt) => { // функция выбора эффекта при клике по превьюшке
   const checkedEffect = evt.target.value; // значение выбранного эффекта
 
   switch (checkedEffect) {
@@ -115,4 +115,4 @@ const onChangeEffectStyle = () => {
   });
 };
 
-export { checkEffect, onChangeEffectStyle };
+export { onChangeEffect, onChangeEffectStyle };

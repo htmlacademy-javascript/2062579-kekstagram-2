@@ -1,6 +1,6 @@
 import { pristine } from './validation-form.js'; // импорт данных валидации полей формы
-import { SCALE_PARAMETERS, downPhotoScale, upPhotoScale } from './scale-photo.js'; // импорт данных изменения масштаба превью
-import { checkEffect } from './add-effects.js'; // импорт данных работы фильтров
+import { SCALE_PARAMETERS, onClickDownscaleButton, onClickUpscaleButton } from './scale-photo.js'; // импорт данных изменения масштаба превью
+import { onChangeEffect } from './add-effects.js'; // импорт данных работы фильтров
 import { setFormData } from './interaction-server.js'; // импорт функции отправки данных на сервер
 import { showErrorMessage } from './utils.js';
 
@@ -23,18 +23,18 @@ const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // по�
 const scaleControlSmaller = document.querySelector('.scale__control--smaller'); // кнопка уменьшения масштаба
 const scaleControlBigger = document.querySelector('.scale__control--bigger'); // кнопка увеличения масштаба
 
-const onSubmitForm = setFormData(closeUploadForm); // для передачи в добавление и удаление обработчиков
+const onSubmitForm = setFormData(onClickCanselButton); // для передачи в добавление и удаление обработчиков
 
 /* функция установки обработчиков на кнопки модалки формы */
 const setFormHandlers = () => {
-  uploadImageCancel.addEventListener('click', closeUploadForm); // обработчик на крестик (3)
+  uploadImageCancel.addEventListener('click', onClickCanselButton); // обработчик на крестик (3)
   uploadImageForm.addEventListener('submit', onSubmitForm); // обработчик валидации формы (3)
-  scaleControlSmaller.addEventListener('click', downPhotoScale); // обработчик кнопки уменьшения масштаба превью (3)
-  scaleControlBigger.addEventListener('click', upPhotoScale); // обработчик кнопки увеличения масштаба превью (3)
-  effectsList.addEventListener('change', checkEffect); // обработчик выбора фильтра (3)
+  scaleControlSmaller.addEventListener('click', onClickDownscaleButton); // обработчик кнопки уменьшения масштаба превью (3)
+  scaleControlBigger.addEventListener('click', onClickUpscaleButton); // обработчик кнопки увеличения масштаба превью (3)
+  effectsList.addEventListener('change', onChangeEffect); // обработчик выбора фильтра (3)
 };
 
-function closeUploadForm () { // функция закрытия формы
+function onClickCanselButton () { // функция закрытия формы
   uploadImageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeDown); // снятие обработчика с эскейпа
@@ -55,12 +55,12 @@ function onEscapeDown (evt) { // функция закрытия окна по �
     if (document.activeElement === commentField || document.activeElement === hashtagsField || errorMessage) { // при фокусе на полях ввода или наличии сообщения об ошибке загрузки - отключаем закрытие по эскейп
       evt.stopPropagation();
     } else {
-      closeUploadForm();
+      onClickCanselButton();
     }
   }
 }
 
-const openUploadForm = (evt) => { // функция открытия формы
+const onChangeUploadInput = (evt) => { // функция открытия формы
   uploadImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   const file = evt.target.files[0];
@@ -75,12 +75,12 @@ const openUploadForm = (evt) => { // функция открытия формы
       effectsPreview.style.backgroundImage = `url(${source})`;
     });
   } else {
-    closeUploadForm(); // если выбран не подходящий тип файла закрываем форму
+    onClickCanselButton(); // если выбран не подходящий тип файла закрываем форму
     showErrorMessage(NOT_ALLOWED_FILE.TEXT, NOT_ALLOWED_FILE.TIMEOUT);
   }
   document.addEventListener('keydown', onEscapeDown); // обработчик на эскейп
 };
 
-const onChangeImageInput = () => uploadImageInput.addEventListener('change', openUploadForm);
+const onChangeImageInput = () => uploadImageInput.addEventListener('change', onChangeUploadInput);
 
 export { setFormHandlers, onChangeImageInput };
