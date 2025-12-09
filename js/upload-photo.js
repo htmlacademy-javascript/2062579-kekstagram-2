@@ -27,11 +27,11 @@ const onSubmitForm = setFormData(onClickCanselButton); // для передач�
 
 /* функция установки обработчиков на кнопки модалки формы */
 const setFormHandlers = () => {
-  uploadImageCancel.addEventListener('click', onClickCanselButton); // обработчик на крестик (3)
-  uploadImageForm.addEventListener('submit', onSubmitForm); // обработчик валидации формы (3)
-  scaleControlSmaller.addEventListener('click', onClickDownscaleButton); // обработчик кнопки уменьшения масштаба превью (3)
-  scaleControlBigger.addEventListener('click', onClickUpscaleButton); // обработчик кнопки увеличения масштаба превью (3)
-  effectsList.addEventListener('change', onChangeEffect); // обработчик выбора фильтра (3)
+  uploadImageCancel.addEventListener('click', onClickCanselButton); // обработчик на крестик
+  uploadImageForm.addEventListener('submit', onSubmitForm); // обработчик валидации формы
+  scaleControlSmaller.addEventListener('click', onClickDownscaleButton); // обработчик кнопки уменьшения масштаба превью
+  scaleControlBigger.addEventListener('click', onClickUpscaleButton); // обработчик кнопки увеличения масштаба превью
+  effectsList.addEventListener('change', onChangeEffect); // обработчик выбора фильтра
 };
 
 function onClickCanselButton () { // функция закрытия формы
