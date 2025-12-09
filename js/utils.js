@@ -1,4 +1,5 @@
 const ERROR_MESSAGE_TIMEOUT = 5000; // время показа сообщения об ошибке загрузки данных
+const TIMEOUT_DELAY = 500; // задержка времени для троттлинга и дебаунса
 const body = document.querySelector('body');
 const errorGetMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error'); // шаблон сообщения о неуспешной загрузке данных
 
@@ -42,7 +43,7 @@ const showErrorMessage = (text, timeOut = ERROR_MESSAGE_TIMEOUT) => {
 };
 
 /* функция debounce */
-const debounce = (cb, timeOut) => {
+const debounce = (cb, timeOut = TIMEOUT_DELAY) => {
   let timeOutId;
   return (...rest) => {
     clearTimeout(timeOutId);
@@ -53,7 +54,7 @@ const debounce = (cb, timeOut) => {
 };
 
 /* функция throttle */
-const throttle = (cb, timeOut) => {
+const throttle = (cb, timeOut = TIMEOUT_DELAY) => {
   let timeOutId = null;
   return (...rest) => {
     if (timeOutId) {
@@ -77,4 +78,4 @@ const getArrayNIds = (n, a, b) => {
   return arrayNIds;
 };
 
-export { getRandomNumber, showErrorMessage, debounce, throttle, getUnicRandomIds, getArrayNIds };
+export { TIMEOUT_DELAY, getRandomNumber, showErrorMessage, debounce, throttle, getUnicRandomIds, getArrayNIds };

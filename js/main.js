@@ -1,4 +1,4 @@
-import { showErrorMessage, throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { showErrorMessage, throttle, TIMEOUT_DELAY } from './utils.js'; // импорт функции вызова сообщения об ошибке
 import { getServerData } from './api.js'; // импорт данных с сервера
 import { createPictures } from './create-pictures.js'; // импорт функции, отрисовывающей изображения на странице
 import { setBigPictureHandlers, openBigPicture } from './create-big-picture.js'; // импорт функции открытия/закрытия большого изображения
@@ -39,8 +39,8 @@ onChangeEffectStyle();
 showFilterButtons(photosArray);
 
 /* функция-обработчик выбора фильтра */
-const onChangeFilter = checkFilter(photosArray);
+const onClickFilterButton = checkFilter(photosArray);
 
 /* установка обработчика на выбор фильтра */
-imgFiltersForm.addEventListener('click', throttle(onChangeFilter, 500));
+imgFiltersForm.addEventListener('click', throttle(onClickFilterButton, TIMEOUT_DELAY));
 

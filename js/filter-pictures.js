@@ -1,7 +1,10 @@
 import { getArrayNIds } from './utils.js';
 import { createPictures } from './create-pictures.js';
 
-/* фильтры изображений */
+const RANDOM_INDEX_PARAMETERS = {
+  NUMBERS: 10,
+  FIRST_INDEX: 0
+};
 const imgFilters = document.querySelector('.img-filters'); // блок с фильтрами
 const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // форма
 const FilterButtons = imgFiltersForm.children; // все кнопки формы
@@ -29,7 +32,7 @@ const removePictures = () => {
 };
 
 /* функция отбора N-случайных элементов из массива */
-const randomiser = (n, start, array) => {
+const selectRandomIndexArray = (n, start, array) => {
   const nIdsArray = getArrayNIds(n, start, array.length - 1);
   const randomArray = [];
   nIdsArray.forEach((elem) => {
@@ -39,7 +42,7 @@ const randomiser = (n, start, array) => {
 };
 
 /* функция перерисовки фильтрованных фото */
-const rerender = (array) => {
+const rerenderPictures = (array) => {
   removePictures(); // стираем все фото
   createPictures(array); // отрисовываем новые
 };
@@ -56,14 +59,14 @@ const checkFilter = (array) => (evt) => {
 
   switch (checkedFilter.id) { // выбираем какой массив отрисовать
     case 'filter-default':
-      rerender(array);
+      rerenderPictures(array);
       break;
     case 'filter-random':
-      randomArray = randomiser(10, 0, array); // отбираем случайные фото
-      rerender(randomArray);
+      randomArray = selectRandomIndexArray(RANDOM_INDEX_PARAMETERS.NUMBERS, RANDOM_INDEX_PARAMETERS.FIRST_INDEX, array); // отбираем случайные фото
+      rerenderPictures(randomArray);
       break;
     case 'filter-discussed':
-      rerender(sortedArray);
+      rerenderPictures(sortedArray);
       break;
   }
 };
