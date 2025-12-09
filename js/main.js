@@ -13,15 +13,6 @@ const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // фор
 /* загружаем данные с сервера */
 const photosArray = await getServerData(showErrorMessage);
 
-/* отрисовываем изображения по данным с сервера */
-createPictures(photosArray);
-
-/* устанавливаем обработчики кнопок на большом фото */
-setBigPictureHandlers(photosArray);
-
-/* открываем большое фото по клику на маленьких */
-openBigPicture(photosArray);
-
 /* устанавливаем обработчики кнопок на форме загрузки фото */
 setFormHandlers();
 
@@ -34,6 +25,15 @@ pristineValidateHashtags(); // проверка хэштэгов
 
 /* подключаем изменение эффектов и значения слайдера */
 onChangeEffectStyle();
+
+/* отрисовываем изображения по данным с сервера */
+createPictures(photosArray);
+
+/* устанавливаем обработчики кнопок на большом фото */
+setBigPictureHandlers(photosArray);
+
+/* открываем большое фото по клику на маленьких */
+openBigPicture(photosArray);
 
 /* показываем фильтры */
 showFilterButtons(photosArray);
