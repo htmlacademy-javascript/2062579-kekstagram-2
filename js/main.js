@@ -10,9 +10,6 @@ import { showFilterButtons, checkFilter } from './filter-pictures.js'; // имп
 const imgFilters = document.querySelector('.img-filters'); // блок с фильтрами
 const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // форма
 
-/* загружаем данные с сервера */
-const photosArray = await getServerData(showErrorMessage);
-
 /* устанавливаем обработчики кнопок на форме загрузки фото */
 setFormHandlers();
 
@@ -25,6 +22,9 @@ pristineValidateHashtags(); // проверка хэштэгов
 
 /* подключаем изменение эффектов и значения слайдера */
 onChangeEffectStyle();
+
+/* загружаем данные с сервера */
+const photosArray = await getServerData(showErrorMessage);
 
 /* отрисовываем изображения по данным с сервера */
 createPictures(photosArray);
