@@ -10,8 +10,34 @@ const getRandomNumber = (a, b) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-/* сортировка в случайном порядке */
-const randomSorting = () => 0.5 - Math.random();
+/* функция генерации уникальных случайных значений из диапазона */
+const getUnicRandomIds = (min, max) => {
+  const arrayUnicRandomIds = [];
+  return function () {
+    let newId = getRandomNumber(min, max);
+
+    if (arrayUnicRandomIds.length >= (max - min + 1)) {
+      return null;
+    }
+
+    while (arrayUnicRandomIds.includes(newId)) {
+      newId = getRandomNumber(min, max);
+    }
+    arrayUnicRandomIds.push(newId);
+    return newId;
+  };
+};
+
+/* функция получения заданного числа уникальных ID из диапазона */
+const getArrayNIds = (n, a, b) => {
+  const arrayNIds = [];
+  const getUnicRandomPictureIds = getUnicRandomIds(a, b);
+  for (let i = 0; i < n; i++) {
+    const newId = getUnicRandomPictureIds();
+    arrayNIds.push(newId);
+  }
+  return arrayNIds;
+};
 
 /* функция показа сообщения при ошибке */
 const showErrorMessage = (text, timeOut = ERROR_MESSAGE_TIMEOUT) => {
@@ -52,4 +78,4 @@ const throttle = (cb, timeOut = TIMEOUT_DELAY) => {
   };
 };
 
-export { getRandomNumber, showErrorMessage, debounce, throttle, randomSorting };
+export { getRandomNumber, showErrorMessage, debounce, throttle, getArrayNIds };

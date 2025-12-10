@@ -1,5 +1,5 @@
 import { createPictures } from './create-pictures.js';
-import { throttle, randomSorting } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { debounce, getArrayNIds } from './utils.js'; // импорт функции вызова сообщения об ошибке
 
 const RANDOM_INDEX_PARAMETERS = {
   NUMBERS: 10,
@@ -7,7 +7,7 @@ const RANDOM_INDEX_PARAMETERS = {
 };
 const imgFilters = document.querySelector('.img-filters'); // блок с фильтрами
 const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // форма
-const FilterButtons = imgFiltersForm.children; // все кнопки формы
+const filterButtons = imgFiltersForm.children; // все кнопки формы
 const picturesList = document.querySelector('.pictures'); // список с фотографиями
 let picturesListItemsAll = picturesList.querySelectorAll('.picture');
 
@@ -19,7 +19,17 @@ const showFilterButtons = (condition) => {
 };
 
 /* функция сортировки массива по убыванию */
-const comparePictureLikes = (elementA, elementB) => elementB.likes - elementA.likes;
+const comparePictureLikes = (elementA, elementB) => elementB.comments.length - elementA.comments.length;
+
+/* функция отбора N-случайных элементов из массива */
+const selectRandomIndexArray = (n, start, array) => {
+  const nIdsArray = getArrayNIds(n, start, array.length - 1);
+  const randomArray = [];
+  nIdsArray.forEach((elem) => {
+    randomArray.push(array[elem]);
+  });
+  return randomArray;
+};
 
 /* функция удаления изображений */
 const removePictures = () => {
@@ -39,7 +49,7 @@ const rerenderPictures = (array) => {
 
 /* функция изменения стиля выбранного фильтра */
 const changeStyleFilterButtons = (checked) => {
-  for (const element of FilterButtons) { // убираем у всех кнопок активный стиль
+  for (const element of filterButtons) { // убираем у всех кнопок активный стиль
     element.classList.remove('img-filters__button--active');
   }
   checked.classList.add('img-filters__button--active'); // вешаем на выбранную кнопку активный стиль
@@ -55,7 +65,7 @@ const renderFilteredPictures = (checked, array) => {
       rerenderPictures(array);
       break;
     case 'filter-random':
-      randomArray = array.slice().sort(randomSorting).slice(RANDOM_INDEX_PARAMETERS.FIRST_INDEX, RANDOM_INDEX_PARAMETERS.NUMBERS);
+      randomArray = selectRandomIndexArray(RANDOM_INDEX_PARAMETERS.NUMBERS, RANDOM_INDEX_PARAMETERS.FIRST_INDEX, array); // отбираем случайные фото
       rerenderPictures(randomArray);
       break;
     case 'filter-discussed':
@@ -65,7 +75,7 @@ const renderFilteredPictures = (checked, array) => {
 };
 
 /* задержка времени при отрисовке фото */
-const throttleRerender = throttle(renderFilteredPictures);
+const throttleRerender = debounce(renderFilteredPictures);
 
 /* функция выбора фильтра */
 const checkFilter = (array) => (evt) => {
