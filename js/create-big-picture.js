@@ -26,7 +26,7 @@ const createCommentsListItem = (comment) => {
 };
 
 /* функция управления блоком комментариев */
-const manageComments = (array) => {
+const onClickCommentsLoader = (array) => {
   const id = bigPictureImg.dataset.id; // определяем к какому именно объекту данных нужно обращаться
   const socialCommentsFragment = document.createDocumentFragment(); // фрагмент для комментариев
   const workArray = array[id].comments; // массив с комментами в объекте данных
@@ -48,7 +48,7 @@ const manageComments = (array) => {
   }
 };
 
-const closeBigPicture = () => { // функция закрытия окна
+const onClickResetButton = () => { // функция закрытия окна
   bigPicture.classList.add('hidden'); // закрыть окно
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeDown); // снять обработчик с эскейпа
@@ -56,13 +56,13 @@ const closeBigPicture = () => { // функция закрытия окна
 
 /* функция установки обработчиков на кнопки модалки с большим фото */
 const setBigPictureHandlers = (array) => {
-  commentsLoader.addEventListener('click', () => manageComments(array)); // вешаем обработчик на кнопку загрузки комм-в
-  bigPictureCancel.addEventListener('click', closeBigPicture); // повесить обработчик на крестик
+  commentsLoader.addEventListener('click', () => onClickCommentsLoader(array)); // вешаем обработчик на кнопку загрузки комм-в
+  bigPictureCancel.addEventListener('click', onClickResetButton); // повесить обработчик на крестик
 };
 
 function onEscapeDown (evt) { // функция закрытия окна по эскейпу
   if (evt.key === 'Escape') {
-    closeBigPicture();
+    onClickResetButton();
   }
 }
 
@@ -74,10 +74,10 @@ const packBigPictureData = (array, id) => { // функция заполнени
   likesCount.textContent = array[id].likes;
   socialComments.innerHTML = '';
   commentsLoader.classList.remove('hidden');
-  manageComments(array);
+  onClickCommentsLoader(array);
 };
 
-const openBigPicture = (evt, array) => { // функция открытия окна
+const onClickSmallPhoto = (evt, array) => { // функция открытия окна
   if (evt.target.matches('.picture__img')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно
@@ -88,6 +88,6 @@ const openBigPicture = (evt, array) => { // функция открытия ок
   }
 };
 
-const onClickSmallPhoto = (array) => picturesContainer.addEventListener('click', (evt) => openBigPicture(evt, array));
+const openBigPicture = (array) => picturesContainer.addEventListener('click', (evt) => onClickSmallPhoto(evt, array));
 
-export { setBigPictureHandlers, onClickSmallPhoto };
+export { setBigPictureHandlers, openBigPicture };

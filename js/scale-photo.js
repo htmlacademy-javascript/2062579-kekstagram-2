@@ -6,7 +6,7 @@ const SCALE_PARAMETERS = { // параметры для масштаба
 const scaleControlValue = document.querySelector('.scale__control--value'); // поле значения масштаба
 const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 
-const downPhotoScale = () => {
+const onClickDownscaleButton = () => {
   let scaleValue = parseInt(scaleControlValue.value, 10);
   if (scaleValue > SCALE_PARAMETERS.MIN) {
     scaleValue -= SCALE_PARAMETERS.STEP;
@@ -15,7 +15,7 @@ const downPhotoScale = () => {
   }
 };
 
-const upPhotoScale = () => {
+const onClickUpscaleButton = () => {
   let scaleValue = parseInt(scaleControlValue.value, 10);
   if (scaleValue < SCALE_PARAMETERS.MAX) {
     scaleValue += SCALE_PARAMETERS.STEP;
@@ -24,4 +24,4 @@ const upPhotoScale = () => {
   }
 };
 
-export { SCALE_PARAMETERS, downPhotoScale, upPhotoScale };
+export { SCALE_PARAMETERS, onClickUpscaleButton, onClickDownscaleButton };

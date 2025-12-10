@@ -1,15 +1,13 @@
 import { pristine } from './validation-form';
 import { uploadDataServer } from './api.js';
 
-const ERROR_MESSAGE_TIMEOUT = 5000; // время показа сообщения об ошибке загрузки данных
 const body = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success'); // шаблон сообщения об успешной отправке фото
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error'); // шаблон сообщения о неуспешной отправке фото
-const errorGetMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error'); // шаблон сообщения о неуспешной загрузке данных
 const uploadSubmitButton = document.querySelector('.img-upload__submit'); // кнопка отправки формы
 
 /* функция закрытия окна сообщения с результатом отправки формы */
-const closeResultMessage = (element) => {
+const onClickResultButton = (element) => {
   document.removeEventListener('keydown', onEscapeDown);
   document.removeEventListener('click', onWindowClick);
   element.remove();
@@ -26,20 +24,9 @@ const showSetMessage = (result) => {
   }
   resultMessage.classList.add('result-message');
   const resultButton = resultMessage.querySelector(`.${result}__button`);
-  resultButton.addEventListener('click', () => closeResultMessage(resultMessage));
+  resultButton.addEventListener('click', () => onClickResultButton(resultMessage));
   document.addEventListener('keydown', onEscapeDown);
   document.addEventListener('click', onWindowClick);
-  return body.append(resultMessage);
-};
-
-/* функция показа сообщения при загрузке данных */
-const showGetMessage = () => {
-  const resultMessage = errorGetMessageTemplate.cloneNode(true);
-
-  setTimeout(() => { // установка удаления сообщения
-    resultMessage.remove();
-  }, ERROR_MESSAGE_TIMEOUT);
-
   return body.append(resultMessage);
 };
 
@@ -47,7 +34,7 @@ const showGetMessage = () => {
 function onEscapeDown (evt) {
   const resultMessage = document.querySelector('.result-message');
   if (evt.key === 'Escape') {
-    closeResultMessage(resultMessage);
+    onClickResultButton(resultMessage);
   }
 }
 
@@ -58,7 +45,7 @@ function onWindowClick (evt) {
     const resultMessageInner = resultMessage.querySelector('div'); // окно с сообщением об успехе
     const isResultMessage = evt.composedPath().includes(resultMessageInner); // проверка, что клик не в окне
     if (!isResultMessage) {
-      closeResultMessage(resultMessage);
+      onClickResultButton(resultMessage);
     }
   }
 }
@@ -106,4 +93,4 @@ const setFormData = (submitForm) => (evt) => {
   }
 };
 
-export { setFormData, showGetMessage };
+export { setFormData };
