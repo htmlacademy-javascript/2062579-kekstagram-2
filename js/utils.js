@@ -64,18 +64,4 @@ const debounce = (cb, timeOut = TIMEOUT_DELAY) => {
   };
 };
 
-/* функция throttle */
-const throttle = (cb, timeOut = TIMEOUT_DELAY) => {
-  let timeOutId = null;
-  return (...rest) => {
-    if (timeOutId) {
-      return;
-    }
-    timeOutId = setTimeout(() => {
-      cb.apply(this, rest);
-      timeOutId = null;
-    }, timeOut);
-  };
-};
-
-export { getRandomNumber, showErrorMessage, debounce, throttle, getArrayNIds };
+export { showErrorMessage, debounce, getArrayNIds };
