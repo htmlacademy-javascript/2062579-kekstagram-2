@@ -1,5 +1,6 @@
 import { getArrayNIds } from './utils.js';
 import { createPictures } from './create-pictures.js';
+import { throttle, TIMEOUT_DELAY } from './utils.js'; // импорт функции вызова сообщения об ошибке
 
 const RANDOM_INDEX_PARAMETERS = {
   NUMBERS: 10,
@@ -47,17 +48,20 @@ const rerenderPictures = (array) => {
   createPictures(array); // отрисовываем новые
 };
 
-/* функция выбора фильтра */
-const checkFilter = (array) => (evt) => {
-  const checkedFilter = evt.target; // определяем по какой кнопке кликнули
+/* функция изменения стиля выбранного фильтра */
+const changeStyleFilterButtons = (checked) => {
   for (const element of FilterButtons) { // убираем у всех кнопок активный стиль
     element.classList.remove('img-filters__button--active');
   }
-  checkedFilter.classList.add('img-filters__button--active'); // вешаем на выбранную кнопку активный стиль
+  checked.classList.add('img-filters__button--active'); // вешаем на выбранную кнопку активный стиль
+};
+
+/* функция отрисовки фото при применении фильтра */
+const renderFilteredPictures = (checked, array) => {
   let randomArray = []; // массив для 10 случайных фото
   const sortedArray = array.slice().sort(comparePictureLikes); // сортированный по лайкам массив
 
-  switch (checkedFilter.id) { // выбираем какой массив отрисовать
+  switch (checked.id) { // выбираем какой массив отрисовать
     case 'filter-default':
       rerenderPictures(array);
       break;
@@ -69,6 +73,16 @@ const checkFilter = (array) => (evt) => {
       rerenderPictures(sortedArray);
       break;
   }
+};
+
+/* задержка времени при отрисовке фото */
+const throttleRerender = throttle(renderFilteredPictures, TIMEOUT_DELAY);
+
+/* функция выбора фильтра */
+const checkFilter = (array) => (evt) => {
+  const checkedFilter = evt.target; // определяем по какой кнопке кликнули
+  changeStyleFilterButtons(checkedFilter); // меняем стили кнопок фильтров
+  throttleRerender(checkedFilter, array); // применяем фильтр к фото
 };
 
 export { showFilterButtons, checkFilter };
