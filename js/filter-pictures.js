@@ -1,6 +1,5 @@
-import { getArrayNIds } from './utils.js';
 import { createPictures } from './create-pictures.js';
-import { throttle, TIMEOUT_DELAY } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
 
 const RANDOM_INDEX_PARAMETERS = {
   NUMBERS: 10,
@@ -32,16 +31,6 @@ const removePictures = () => {
   });
 };
 
-/* функция отбора N-случайных элементов из массива */
-const selectRandomIndexArray = (n, start, array) => {
-  const nIdsArray = getArrayNIds(n, start, array.length - 1);
-  const randomArray = [];
-  nIdsArray.forEach((elem) => {
-    randomArray.push(array[elem]);
-  });
-  return randomArray;
-};
-
 /* функция перерисовки фильтрованных фото */
 const rerenderPictures = (array) => {
   removePictures(); // стираем все фото
@@ -66,7 +55,7 @@ const renderFilteredPictures = (checked, array) => {
       rerenderPictures(array);
       break;
     case 'filter-random':
-      randomArray = selectRandomIndexArray(RANDOM_INDEX_PARAMETERS.NUMBERS, RANDOM_INDEX_PARAMETERS.FIRST_INDEX, array); // отбираем случайные фото
+      randomArray = array.slice().sort(() => 0.5 - Math.random()).slice(RANDOM_INDEX_PARAMETERS.FIRST_INDEX, RANDOM_INDEX_PARAMETERS.NUMBERS);
       rerenderPictures(randomArray);
       break;
     case 'filter-discussed':
@@ -76,7 +65,7 @@ const renderFilteredPictures = (checked, array) => {
 };
 
 /* задержка времени при отрисовке фото */
-const throttleRerender = throttle(renderFilteredPictures, TIMEOUT_DELAY);
+const throttleRerender = throttle(renderFilteredPictures);
 
 /* функция выбора фильтра */
 const checkFilter = (array) => (evt) => {
