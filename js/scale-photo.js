@@ -6,20 +6,22 @@ const SCALE_PARAMETERS = { // параметры для масштаба
 const scaleControlValue = document.querySelector('.scale__control--value'); // поле значения масштаба
 const uploadImagePreview = document.querySelector('.img-upload__preview img'); // превьюшка
 
+/* обработчик кнопки уменьшения масштаба */
 const onClickDownscaleButton = () => {
   let scaleValue = parseInt(scaleControlValue.value, 10);
   if (scaleValue > SCALE_PARAMETERS.MIN) {
     scaleValue -= SCALE_PARAMETERS.STEP;
-    uploadImagePreview.style.scale = `${scaleValue}%`;
+    uploadImagePreview.style.transform = `scale(${scaleValue}%)`;
     scaleControlValue.value = `${scaleValue}%`;
   }
 };
 
+/* обработчик кнопки увеличения масштаба */
 const onClickUpscaleButton = () => {
   let scaleValue = parseInt(scaleControlValue.value, 10);
   if (scaleValue < SCALE_PARAMETERS.MAX) {
     scaleValue += SCALE_PARAMETERS.STEP;
-    uploadImagePreview.style.scale = `${scaleValue}%`;
+    uploadImagePreview.style.transform = `scale(${scaleValue}%)`;
     scaleControlValue.value = `${scaleValue}%`;
   }
 };
