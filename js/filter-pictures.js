@@ -35,9 +35,7 @@ const selectRandomIndexArray = (n, start, array) => {
 const removePictures = () => {
   picturesListItemsAll = picturesList.querySelectorAll('.picture');
   picturesListItemsAll.forEach((picturesListItem) => {
-    if (picturesListItem.classList.contains('picture')) {
-      picturesListItem.remove();
-    }
+    picturesListItem.remove();
   });
 };
 
@@ -80,8 +78,12 @@ const throttleRerender = debounce(renderFilteredPictures);
 /* функция выбора фильтра */
 const checkFilter = (array) => (evt) => {
   const checkedFilter = evt.target; // определяем по какой кнопке кликнули
-  changeStyleFilterButtons(checkedFilter); // меняем стили кнопок фильтров
-  throttleRerender(checkedFilter, array); // применяем фильтр к фото
+  if (checkedFilter.classList.contains('img-filters__button')) { // проверяем, что кликнули именно по кнопке
+    if (!checkedFilter.classList.contains('img-filters__button--active') || checkedFilter.id === 'filter-random') { // для активного фильтра не проводим перерисовку при повторных нажатиях, но для рандомного фильтра перерисовываем всегда
+      changeStyleFilterButtons(checkedFilter); // меняем стили кнопок фильтров
+      throttleRerender(checkedFilter, array); // применяем фильтр к фото
+    }
+  }
 };
 
 export { showFilterButtons, checkFilter };
