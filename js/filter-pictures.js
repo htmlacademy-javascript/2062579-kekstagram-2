@@ -1,5 +1,5 @@
 import { createPictures } from './create-pictures.js';
-import { throttle } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { throttle, randomSorting } from './utils.js'; // импорт функции вызова сообщения об ошибке
 
 const RANDOM_INDEX_PARAMETERS = {
   NUMBERS: 10,
@@ -55,7 +55,7 @@ const renderFilteredPictures = (checked, array) => {
       rerenderPictures(array);
       break;
     case 'filter-random':
-      randomArray = array.slice().sort(() => 0.5 - Math.random()).slice(RANDOM_INDEX_PARAMETERS.FIRST_INDEX, RANDOM_INDEX_PARAMETERS.NUMBERS);
+      randomArray = array.slice().sort(randomSorting).slice(RANDOM_INDEX_PARAMETERS.FIRST_INDEX, RANDOM_INDEX_PARAMETERS.NUMBERS);
       rerenderPictures(randomArray);
       break;
     case 'filter-discussed':

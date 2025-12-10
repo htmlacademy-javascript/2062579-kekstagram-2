@@ -10,6 +10,9 @@ const getRandomNumber = (a, b) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+/* сортировка в случайном порядке */
+const randomSorting = () => 0.5 - Math.random();
+
 /* функция показа сообщения при ошибке */
 const showErrorMessage = (text, timeOut = ERROR_MESSAGE_TIMEOUT) => {
   const resultMessage = errorGetMessageTemplate.cloneNode(true);
@@ -49,4 +52,4 @@ const throttle = (cb, timeOut = TIMEOUT_DELAY) => {
   };
 };
 
-export { getRandomNumber, showErrorMessage, debounce, throttle };
+export { getRandomNumber, showErrorMessage, debounce, throttle, randomSorting };
