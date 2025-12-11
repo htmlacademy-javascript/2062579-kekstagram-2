@@ -1,10 +1,12 @@
-const SERVER_ADDRESS = {
-  'POST': 'https://31.javascript.htmlacademy.pro/kekstagram',
-  'GET': 'https://31.javascript.htmlacademy.pro/kekstagram/data'
+const SERVER_ADDRESS = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const ROUTE = {
+  SEND: '/',
+  GET: '/data/'
 };
 
 /* функция запроса для отправки данных на сервер */
-const uploadDataServer = (requestBody) => fetch(SERVER_ADDRESS['POST'],
+const uploadDataServer = (requestBody) => fetch(
+  `${SERVER_ADDRESS}${ROUTE.SEND}`,
   {
     method: 'POST',
     body: requestBody
@@ -15,14 +17,14 @@ const uploadDataServer = (requestBody) => fetch(SERVER_ADDRESS['POST'],
 const getServerData = async (message) => {
   let responce;
   try {
-    responce = await fetch(SERVER_ADDRESS['GET']);
+    responce = await fetch(`${SERVER_ADDRESS}${ROUTE.GET}`);
     if (!responce.ok) {
       message();
     }
+    return responce.json();
   } catch {
     message();
   }
-  return responce.json();
 };
 
 export { uploadDataServer, getServerData };
