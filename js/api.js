@@ -1,4 +1,4 @@
-const SERVER_ADDRESS = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const SERVER_ADDRESS = 'https://32.javascript.htmlacademy.pro/kekstagram';
 const ROUTE = {
   SEND: '/',
   GET: '/data/'
@@ -20,6 +20,8 @@ const getServerData = async (message) => {
     responce = await fetch(`${SERVER_ADDRESS}${ROUTE.GET}`);
     if (!responce.ok) {
       message();
+      responce = [];
+      return responce;
     }
     return responce.json();
   } catch {
