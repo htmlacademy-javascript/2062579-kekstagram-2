@@ -1,4 +1,4 @@
-const SERVER_ADDRESS = 'https://32.javascript.htmlacademy.pro/kekstagram';
+const SERVER_ADDRESS = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const ROUTE = {
   SEND: '/',
   GET: '/data/'
