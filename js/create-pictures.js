@@ -1,8 +1,9 @@
+const picturesList = document.querySelector('.pictures'); // список с фотографиями
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture'); // шаблон для фото
+const picturesFragment = document.createDocumentFragment(); // фрагмент
+
 /* функция отрисовки фотографии в большом размере */
 const createPictures = (datasArray) => {
-  const picturesList = document.querySelector('.pictures'); // список с фотографиями
-  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture'); // шаблон для фото
-  const picturesFragment = document.createDocumentFragment(); // фрагмент
 
   datasArray.forEach(({ id, url, description, likes, comments }) => {
     const picturesListItem = pictureTemplate.cloneNode(true);

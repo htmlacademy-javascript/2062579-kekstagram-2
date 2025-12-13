@@ -57,7 +57,6 @@ const validateHashTagRules = () => {
   for (const hashtagsFieldValue of hashtagsFieldValues) { // цикл проверки каждого хэштэга
     if (!hashtagRules.test(hashtagsFieldValue)) {
       result = false;
-      return result;
     }
   }
   if (hashtagsFieldValues.length > MAX_HASHTAG_NUMBER) { // проверка на макс. кол-во хэштэгов
