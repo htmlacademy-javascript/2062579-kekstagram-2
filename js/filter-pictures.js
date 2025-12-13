@@ -40,7 +40,7 @@ const removePictures = () => {
 };
 
 /* функция перерисовки фильтрованных фото */
-const rerenderPictures = (array) => {
+const reRenderPictures = (array) => {
   removePictures(); // стираем все фото
   createPictures(array); // отрисовываем новые
 };
@@ -56,24 +56,24 @@ const changeStyleFilterButtons = (checked) => {
 /* функция отрисовки фото при применении фильтра */
 const renderFilteredPictures = (checked, array) => {
   let randomArray = []; // массив для 10 случайных фото
-  const sortedArray = array.slice().sort(comparePictureLikes); // сортированный по лайкам массив
+  const sortedArray = array.toSorted(comparePictureLikes); // сортированный по лайкам массив
 
   switch (checked.id) { // выбираем какой массив отрисовать
     case 'filter-default':
-      rerenderPictures(array);
+      reRenderPictures(array);
       break;
     case 'filter-random':
       randomArray = selectRandomIndexArray(RANDOM_INDEX_PARAMETERS.NUMBERS, RANDOM_INDEX_PARAMETERS.FIRST_INDEX, array); // отбираем случайные фото
-      rerenderPictures(randomArray);
+      reRenderPictures(randomArray);
       break;
     case 'filter-discussed':
-      rerenderPictures(sortedArray);
+      reRenderPictures(sortedArray);
       break;
   }
 };
 
 /* задержка времени при отрисовке фото */
-const throttleRerender = debounce(renderFilteredPictures);
+const setThrottleRerender = debounce(renderFilteredPictures);
 
 /* функция выбора фильтра */
 const checkFilter = (array) => (evt) => {
@@ -81,7 +81,7 @@ const checkFilter = (array) => (evt) => {
   if (checkedFilter.classList.contains('img-filters__button')) { // проверяем, что кликнули именно по кнопке
     if (!checkedFilter.classList.contains('img-filters__button--active') || checkedFilter.id === 'filter-random') { // для активного фильтра не проводим перерисовку при повторных нажатиях, но для рандомного фильтра перерисовываем всегда
       changeStyleFilterButtons(checkedFilter); // меняем стили кнопок фильтров
-      throttleRerender(checkedFilter, array); // применяем фильтр к фото
+      setThrottleRerender(checkedFilter, array); // применяем фильтр к фото
     }
   }
 };

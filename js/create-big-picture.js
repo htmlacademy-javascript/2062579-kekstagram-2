@@ -48,7 +48,8 @@ const onClickCommentsLoader = (array) => {
   }
 };
 
-const onClickResetButton = () => { // функция закрытия окна
+/* функция закрытия окна */
+const onClickResetButton = () => {
   bigPicture.classList.add('hidden'); // закрыть окно
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeDown); // снять обработчик с эскейпа
@@ -60,13 +61,15 @@ const setBigPictureHandlers = (array) => {
   bigPictureCancel.addEventListener('click', onClickResetButton); // повесить обработчик на крестик
 };
 
-function onEscapeDown (evt) { // функция закрытия окна по эскейпу
+/* функция закрытия окна по эскейпу */
+function onEscapeDown (evt) {
   if (evt.key === 'Escape') {
     onClickResetButton();
   }
 }
 
-const packBigPictureData = (array, id) => { // функция заполнения полей большого фото
+/* функция заполнения полей большого фото */
+const packBigPictureData = (array, id) => {
   bigPictureImg.dataset.id = id;
   bigPictureImg.src = array[id].url;
   socialCaption.textContent = array[id].description;
@@ -77,7 +80,8 @@ const packBigPictureData = (array, id) => { // функция заполнени
   onClickCommentsLoader(array);
 };
 
-const onClickSmallPhoto = (evt, array) => { // функция открытия окна
+/* функция открытия окна при клике на миниатюру */
+const onClickSmallPhoto = (evt, array) => {
   if (evt.target.matches('.picture__img')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно
