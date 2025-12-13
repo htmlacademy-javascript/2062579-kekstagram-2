@@ -59,7 +59,16 @@ noUiSlider.create(effectLevelSlider, { // подключаем слайдер
   },
   start: EFFECTS['none'].MAX,
   step: EFFECTS['none'].STEP,
-  connect: 'lower'
+  connect: 'lower',
+  format: { // добавлен для прохождения автотестов
+    to: (value) => {
+      if(Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: (value) => parseFloat(value)
+  }
 });
 
 const effectStyle = () => effectName === 'none' ? `${effectName}` : `${effectName}(${effectLevelValue.value}${effectParameter})`; // параметр для инлайн-стиля
