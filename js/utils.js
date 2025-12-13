@@ -19,7 +19,6 @@ const getUnicRandomIds = (min, max) => {
     if (arrayUnicRandomIds.length >= (max - min + 1)) {
       return null;
     }
-
     while (arrayUnicRandomIds.includes(newId)) {
       newId = getRandomNumber(min, max);
     }

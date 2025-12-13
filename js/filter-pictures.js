@@ -7,7 +7,7 @@ const RANDOM_INDEX_PARAMETERS = {
 };
 const imgFilters = document.querySelector('.img-filters'); // блок с фильтрами
 const imgFiltersForm = imgFilters.querySelector('.img-filters__form'); // форма
-const filterButtons = imgFiltersForm.children; // все кнопки формы
+const filterButtons = imgFiltersForm.querySelectorAll('.img-filters__button'); // все кнопки формы
 const picturesList = document.querySelector('.pictures'); // список с фотографиями
 let picturesListItemsAll = picturesList.querySelectorAll('.picture');
 
@@ -47,9 +47,9 @@ const reRenderPictures = (array) => {
 
 /* функция изменения стиля выбранного фильтра */
 const changeStyleFilterButtons = (checked) => {
-  for (const element of filterButtons) { // убираем у всех кнопок активный стиль
+  filterButtons.forEach((element) => { // убираем у всех кнопок активный стиль
     element.classList.remove('img-filters__button--active');
-  }
+  });
   checked.classList.add('img-filters__button--active'); // вешаем на выбранную кнопку активный стиль
 };
 
