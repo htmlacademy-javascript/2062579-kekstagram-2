@@ -7,7 +7,7 @@ import { showErrorMessage } from './utils.js'; // импорт функции п
 const ALLOWED_FILES = ['jpg', 'jpeg', 'png', 'svg', 'webp']; // разрешенные типы файлов для загрузки
 const NOT_ALLOWED_FILE = { // параметры сообщения при выборе неверного типа файла
   TEXT: `Выберите файл с изображением: ${ALLOWED_FILES.join(', ')}`,
-  TIMEOUT: 4000
+  TIMEOUT: 4500
 };
 const body = document.querySelector('body');
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
