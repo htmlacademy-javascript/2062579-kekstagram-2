@@ -3,9 +3,9 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 const picturesFragment = document.createDocumentFragment(); // фрагмент
 
 /* функция отрисовки фотографии в большом размере */
-const createPictures = (datasArray) => {
+const createPictures = (data) => {
 
-  datasArray.forEach(({ id, url, description, likes, comments }) => {
+  data.forEach(({ id, url, description, likes, comments }) => {
     const picturesListItem = pictureTemplate.cloneNode(true);
     const image = picturesListItem.querySelector('.picture__img');
     image.src = url;

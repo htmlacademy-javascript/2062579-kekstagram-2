@@ -1,5 +1,5 @@
 import { createPictures } from './create-pictures.js';
-import { debounce, getArrayNIds } from './utils.js'; // импорт функции вызова сообщения об ошибке
+import { debounce, getSetIds } from './utils.js'; // импорт функции вызова сообщения об ошибке
 
 const RANDOM_INDEX_PARAMETERS = {
   NUMBERS: 10,
@@ -21,13 +21,13 @@ const showFilterButtons = (condition) => {
 const comparePictureLikes = (elementA, elementB) => elementB.comments.length - elementA.comments.length;
 
 /* функция отбора N-случайных элементов из массива */
-const selectRandomIndexArray = (n, start, array) => {
-  const nIdsArray = getArrayNIds(n, start, array.length - 1);
-  const randomArray = [];
-  nIdsArray.forEach((elem) => {
-    randomArray.push(array[elem]);
+const selectRandomIndexes = (number, start, data) => {
+  const setIds = getSetIds(number, start, data.length - 1);
+  const randomIds = [];
+  setIds.forEach((elem) => {
+    randomIds.push(data[elem]);
   });
-  return randomArray;
+  return randomIds;
 };
 
 /* функция удаления изображений */
@@ -39,9 +39,9 @@ const removePictures = () => {
 };
 
 /* функция перерисовки фильтрованных фото */
-const reRenderPictures = (array) => {
+const reRenderPictures = (data) => {
   removePictures(); // стираем все фото
-  createPictures(array); // отрисовываем новые
+  createPictures(data); // отрисовываем новые
 };
 
 /* функция изменения стиля выбранного фильтра */
@@ -52,20 +52,20 @@ const changeStyleFilterButtons = (checked) => {
 };
 
 /* функция отрисовки фото при применении фильтра */
-const renderFilteredPictures = (checked, array) => {
-  let randomArray = []; // массив для 10 случайных фото
-  const sortedArray = array.toSorted(comparePictureLikes); // сортированный по лайкам массив
+const renderFilteredPictures = (checked, pictures) => {
+  let randomPictures = []; // массив для 10 случайных фото
+  const sortedPictures = pictures.toSorted(comparePictureLikes); // сортированный по лайкам массив
 
   switch (checked.id) { // выбираем какой массив отрисовать
     case 'filter-default':
-      reRenderPictures(array);
+      reRenderPictures(pictures);
       break;
     case 'filter-random':
-      randomArray = selectRandomIndexArray(RANDOM_INDEX_PARAMETERS.NUMBERS, RANDOM_INDEX_PARAMETERS.FIRST_INDEX, array); // отбираем случайные фото
-      reRenderPictures(randomArray);
+      randomPictures = selectRandomIndexes(RANDOM_INDEX_PARAMETERS.NUMBERS, RANDOM_INDEX_PARAMETERS.FIRST_INDEX, pictures); // отбираем случайные фото
+      reRenderPictures(randomPictures);
       break;
     case 'filter-discussed':
-      reRenderPictures(sortedArray);
+      reRenderPictures(sortedPictures);
       break;
   }
 };
@@ -74,12 +74,12 @@ const renderFilteredPictures = (checked, array) => {
 const setThrottleRerender = debounce(renderFilteredPictures);
 
 /* функция выбора фильтра */
-const checkFilter = (array) => (evt) => {
+const checkFilter = (data) => (evt) => {
   const checkedFilter = evt.target; // определяем по какой кнопке кликнули
   if (checkedFilter.classList.contains('img-filters__button')) { // проверяем, что кликнули именно по кнопке
     if (!checkedFilter.classList.contains('img-filters__button--active') || checkedFilter.id === 'filter-random') { // для активного фильтра не проводим перерисовку при повторных нажатиях, но для рандомного фильтра перерисовываем всегда
       changeStyleFilterButtons(checkedFilter); // меняем стили кнопок фильтров
-      setThrottleRerender(checkedFilter, array); // применяем фильтр к фото
+      setThrottleRerender(checkedFilter, data); // применяем фильтр к фото
     }
   }
 };

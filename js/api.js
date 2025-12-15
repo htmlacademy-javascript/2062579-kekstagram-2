@@ -15,15 +15,15 @@ const uploadDataServer = (requestBody) => fetch(
 
 /* функция получения данных с сервера */
 const getServerData = async (message) => {
-  let responce;
+  let receivedData;
   try {
-    responce = await fetch(`${SERVER_ADDRESS}${ROUTE.GET}`);
-    if (!responce.ok) {
+    receivedData = await fetch(`${SERVER_ADDRESS}${ROUTE.GET}`);
+    if (!receivedData.ok) {
       message();
-      responce = [];
-      return responce;
+      receivedData = [];
+      return receivedData;
     }
-    return responce.json();
+    return receivedData.json();
   } catch {
     message();
   }

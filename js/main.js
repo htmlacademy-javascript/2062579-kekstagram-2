@@ -24,22 +24,22 @@ pristineValidateHashtags(); // проверка хэштэгов
 onChangeEffectStyle();
 
 /* загружаем данные с сервера */
-const photosArray = await getServerData(showErrorMessage);
+const photos = await getServerData(showErrorMessage);
 
 /* отрисовываем изображения по данным с сервера */
-createPictures(photosArray);
+createPictures(photos);
 
 /* устанавливаем обработчики кнопок на большом фото */
-setBigPictureHandlers(photosArray);
+setBigPictureHandlers(photos);
 
 /* открываем большое фото по клику на маленьких */
-openBigPicture(photosArray);
+openBigPicture(photos);
 
 /* показываем фильтры */
-showFilterButtons(photosArray);
+showFilterButtons(photos);
 
 /* функция-обработчик выбора фильтра */
-const onClickFilterButton = checkFilter(photosArray);
+const onClickFilterButton = checkFilter(photos);
 
 /* установка обработчика на выбор фильтра */
 imgFiltersForm.addEventListener('click', onClickFilterButton);
