@@ -4,38 +4,38 @@ const body = document.querySelector('body');
 const errorGetMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error'); // шаблон сообщения о неуспешной загрузке данных
 
 /* функция получения случайного числа в диапазоне от А до В */
-const getRandomNumber = (a, b) => {
-  const min = Math.min(a, b);
-  const max = Math.max(a, b);
+const getRandomNumber = (startNumber, endNumber) => {
+  const min = Math.min(startNumber, endNumber);
+  const max = Math.max(startNumber, endNumber);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 /* функция генерации уникальных случайных значений из диапазона */
 const getUnicRandomIds = (min, max) => {
-  const arrayUnicRandomIds = [];
+  const unicRandomIds = [];
   return function () {
     let newId = getRandomNumber(min, max);
 
-    if (arrayUnicRandomIds.length >= (max - min + 1)) {
+    if (unicRandomIds.length >= (max - min + 1)) {
       return null;
     }
-    while (arrayUnicRandomIds.includes(newId)) {
+    while (unicRandomIds.includes(newId)) {
       newId = getRandomNumber(min, max);
     }
-    arrayUnicRandomIds.push(newId);
+    unicRandomIds.push(newId);
     return newId;
   };
 };
 
 /* функция получения заданного числа уникальных ID из диапазона */
-const getArrayNIds = (n, a, b) => {
-  const arrayNIds = [];
-  const getUnicRandomPictureIds = getUnicRandomIds(a, b);
-  for (let i = 0; i < n; i++) {
+const getSetIds = (number, start, end) => {
+  const setIds = [];
+  const getUnicRandomPictureIds = getUnicRandomIds(start, end);
+  for (let i = 0; i < number; i++) {
     const newId = getUnicRandomPictureIds();
-    arrayNIds.push(newId);
+    setIds.push(newId);
   }
-  return arrayNIds;
+  return setIds;
 };
 
 /* функция показа сообщения при ошибке */
@@ -63,4 +63,4 @@ const debounce = (cb, timeOut = TIMEOUT_DELAY) => {
   };
 };
 
-export { showErrorMessage, debounce, getArrayNIds };
+export { showErrorMessage, debounce, getSetIds };

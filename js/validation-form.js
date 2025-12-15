@@ -1,9 +1,9 @@
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_NUMBER = 5;
+const HASHTAG_RULES = /^#[a-zа-яё0-9]{1,19}$/i; // регулярное выражение для валидации хэштэга
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
 const commentField = uploadImageForm.querySelector('.text__description'); // поле ввода комментария
 const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // поле ввода хэштэгов
-const hashtagRules = /^#[a-zа-яё0-9]{1,19}$/i; // регулярное выражение для валидации хэштэга
 
 const pristine = new Pristine(uploadImageForm, {
   classTo: 'img-upload__field-wrapper',
@@ -23,7 +23,7 @@ const createErrorHashtagMessage = () => { // функция создания к�
   hashtagsFieldValues = hashtagsField.value.toLowerCase().trim().split(/\s+/); // разбиваем введенные в поле символы на отдельные хэштэги
 
   for (const hashtagsFieldValue of hashtagsFieldValues) {
-    if (!hashtagRules.test(hashtagsFieldValue)) { // если не прошла валидация хэштэга, то
+    if (!HASHTAG_RULES.test(hashtagsFieldValue)) { // если не прошла валидация хэштэга, то
       if (hashtagsFieldValue[0] !== '#') {
         errorHashtagMessage = 'Хэштэг должен начинаться с #';
       } else if (hashtagsFieldValue.length === 1) {
@@ -55,7 +55,7 @@ const validateHashTagRules = () => {
     return result;
   }
   for (const hashtagsFieldValue of hashtagsFieldValues) { // цикл проверки каждого хэштэга
-    if (!hashtagRules.test(hashtagsFieldValue)) {
+    if (!HASHTAG_RULES.test(hashtagsFieldValue)) {
       result = false;
     }
   }

@@ -26,24 +26,24 @@ const createCommentsListItem = (comment) => {
 };
 
 /* функция управления блоком комментариев */
-const onClickCommentsLoader = (array) => {
+const onClickCommentsLoader = (data) => {
   const id = bigPictureImg.dataset.id; // определяем к какому именно объекту данных нужно обращаться
   const socialCommentsFragment = document.createDocumentFragment(); // фрагмент для комментариев
-  const workArray = array[id].comments; // массив с комментами в объекте данных
+  const workData = data[id].comments; // массив с комментами в объекте данных
   let isOpenComments = socialCommentsItems.length; // количество уже показанных комм-в
 
   socialCommentShownCount.textContent = isOpenComments; // записываем сколько комм-в показано
   for (let i = isOpenComments; i < (isOpenComments + NUMBER_OPEN_COMMENTS); i++) { // удаляем с 5 эл-в класс 'hidden' начиная с первого найденного
-    if (!workArray[i]) { // завершаем цикл если элементы закончились
+    if (!workData[i]) { // завершаем цикл если элементы закончились
       break;
     }
-    const newComment = createCommentsListItem(workArray[i]); // создаем комментарий
+    const newComment = createCommentsListItem(workData[i]); // создаем комментарий
     socialCommentsFragment.append(newComment); // загружаем его во фрагмент
   }
   socialComments.append(socialCommentsFragment); // аппендим фрагмент в блок комм-в
   isOpenComments = socialCommentsItems.length; // меняем кол-во показанных комм-в
   socialCommentShownCount.textContent = isOpenComments; // и отображаем это кол-во
-  if (isOpenComments === workArray.length) {
+  if (isOpenComments === workData.length) {
     commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если все комментарии показаны
   }
 };
@@ -56,8 +56,8 @@ const onClickResetButton = () => {
 };
 
 /* функция установки обработчиков на кнопки модалки с большим фото */
-const setBigPictureHandlers = (array) => {
-  commentsLoader.addEventListener('click', () => onClickCommentsLoader(array)); // вешаем обработчик на кнопку загрузки комм-в
+const setBigPictureHandlers = (data) => {
+  commentsLoader.addEventListener('click', () => onClickCommentsLoader(data)); // вешаем обработчик на кнопку загрузки комм-в
   bigPictureCancel.addEventListener('click', onClickResetButton); // повесить обработчик на крестик
 };
 
@@ -69,29 +69,29 @@ function onEscapeDown (evt) {
 }
 
 /* функция заполнения полей большого фото */
-const packBigPictureData = (array, id) => {
+const packBigPictureData = (data, id) => {
   bigPictureImg.dataset.id = id;
-  bigPictureImg.src = array[id].url;
-  socialCaption.textContent = array[id].description;
-  socialCommentsTotal.textContent = array[id].comments.length;
-  likesCount.textContent = array[id].likes;
+  bigPictureImg.src = data[id].url;
+  socialCaption.textContent = data[id].description;
+  socialCommentsTotal.textContent = data[id].comments.length;
+  likesCount.textContent = data[id].likes;
   socialComments.innerHTML = '';
   commentsLoader.classList.remove('hidden');
-  onClickCommentsLoader(array);
+  onClickCommentsLoader(data);
 };
 
 /* функция открытия окна при клике на миниатюру */
-const onClickSmallPhoto = (evt, array) => {
+const onClickSmallPhoto = (evt, data) => {
   if (evt.target.matches('.picture__img')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно
     const index = evt.target.dataset.id; // определяем какой индекс у элемента, по которому кликнули, в объекте
-    packBigPictureData(array, index); // заполняем модальное окно данными большого фото из объекта
+    packBigPictureData(data, index); // заполняем модальное окно данными большого фото из объекта
     body.classList.add('modal-open');
     document.addEventListener('keydown', onEscapeDown); // повесить обработчик на эскейп
   }
 };
 
-const openBigPicture = (array) => picturesContainer.addEventListener('click', (evt) => onClickSmallPhoto(evt, array));
+const openBigPicture = (data) => picturesContainer.addEventListener('click', (evt) => onClickSmallPhoto(evt, data));
 
 export { setBigPictureHandlers, openBigPicture };
