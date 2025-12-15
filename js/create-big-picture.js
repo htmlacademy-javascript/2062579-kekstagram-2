@@ -8,7 +8,7 @@ const socialCaption = bigPicture.querySelector('.social__caption'); // опис�
 const socialCommentsTotal = bigPicture.querySelector('.social__comment-total-count'); // кол-во комментариев
 const likesCount = bigPicture.querySelector('.likes-count'); // кол-во лайков
 const socialComments = bigPicture.querySelector('.social__comments'); // блок с комментариями
-const socialCommentsCollection = socialComments.children; // все комментарии к фото
+const socialCommentsItems = socialComments.children; // все комментарии к фото
 const socialCommentShownCount = bigPicture.querySelector('.social__comment-shown-count'); // количество показанных комм-в
 const commentsLoader = bigPicture.querySelector('.comments-loader'); // кнопка загрузки комм-в
 const socialCommentsTemplate = bigPicture.querySelector('.social__comment'); // комментарий в разметке
@@ -30,7 +30,7 @@ const onClickCommentsLoader = (array) => {
   const id = bigPictureImg.dataset.id; // определяем к какому именно объекту данных нужно обращаться
   const socialCommentsFragment = document.createDocumentFragment(); // фрагмент для комментариев
   const workArray = array[id].comments; // массив с комментами в объекте данных
-  let isOpenComments = socialCommentsCollection.length; // количество уже показанных комм-в
+  let isOpenComments = socialCommentsItems.length; // количество уже показанных комм-в
 
   socialCommentShownCount.textContent = isOpenComments; // записываем сколько комм-в показано
   for (let i = isOpenComments; i < (isOpenComments + NUMBER_OPEN_COMMENTS); i++) { // удаляем с 5 эл-в класс 'hidden' начиная с первого найденного
@@ -41,14 +41,15 @@ const onClickCommentsLoader = (array) => {
     socialCommentsFragment.append(newComment); // загружаем его во фрагмент
   }
   socialComments.append(socialCommentsFragment); // аппендим фрагмент в блок комм-в
-  isOpenComments = socialCommentsCollection.length; // меняем кол-во показанных комм-в
+  isOpenComments = socialCommentsItems.length; // меняем кол-во показанных комм-в
   socialCommentShownCount.textContent = isOpenComments; // и отображаем это кол-во
   if (isOpenComments === workArray.length) {
     commentsLoader.classList.add('hidden'); // скрыть кнопку-загрузчик, если все комментарии показаны
   }
 };
 
-const onClickResetButton = () => { // функция закрытия окна
+/* функция закрытия окна */
+const onClickResetButton = () => {
   bigPicture.classList.add('hidden'); // закрыть окно
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeDown); // снять обработчик с эскейпа
@@ -60,13 +61,15 @@ const setBigPictureHandlers = (array) => {
   bigPictureCancel.addEventListener('click', onClickResetButton); // повесить обработчик на крестик
 };
 
-function onEscapeDown (evt) { // функция закрытия окна по эскейпу
+/* функция закрытия окна по эскейпу */
+function onEscapeDown (evt) {
   if (evt.key === 'Escape') {
     onClickResetButton();
   }
 }
 
-const packBigPictureData = (array, id) => { // функция заполнения полей большого фото
+/* функция заполнения полей большого фото */
+const packBigPictureData = (array, id) => {
   bigPictureImg.dataset.id = id;
   bigPictureImg.src = array[id].url;
   socialCaption.textContent = array[id].description;
@@ -77,7 +80,8 @@ const packBigPictureData = (array, id) => { // функция заполнени
   onClickCommentsLoader(array);
 };
 
-const onClickSmallPhoto = (evt, array) => { // функция открытия окна
+/* функция открытия окна при клике на миниатюру */
+const onClickSmallPhoto = (evt, array) => {
   if (evt.target.matches('.picture__img')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden'); // открыть окно

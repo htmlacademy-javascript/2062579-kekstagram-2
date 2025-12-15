@@ -73,7 +73,8 @@ noUiSlider.create(effectLevelSlider, { // подключаем слайдер
 
 const effectStyle = () => effectName === 'none' ? `${effectName}` : `${effectName}(${effectLevelValue.value}${effectParameter})`; // параметр для инлайн-стиля
 
-const setEffect = (currentEffect) => { // функция установки значений эффектов
+/* функция установки значений эффектов */
+const setEffect = (currentEffect) => {
   effectLevelSlider.noUiSlider.updateOptions({
     range: {
       min: EFFECTS[currentEffect].MIN,
@@ -92,7 +93,8 @@ const setEffect = (currentEffect) => { // функция установки зн
   }
 };
 
-const onChangeEffect = (evt) => { // функция выбора эффекта при клике по превьюшке
+/* функция выбора эффекта при клике по превьюшке */
+const onChangeEffect = (evt) => {
   const checkedEffect = evt.target.value; // значение выбранного эффекта
 
   switch (checkedEffect) {
@@ -117,6 +119,7 @@ const onChangeEffect = (evt) => { // функция выбора эффекта 
   }
 };
 
+/* функция изменения значения эффекта слайдером */
 const onChangeEffectStyle = () => {
   effectLevelSlider.noUiSlider.on('update', () => {
     effectLevelValue.value = effectLevelSlider.noUiSlider.get();

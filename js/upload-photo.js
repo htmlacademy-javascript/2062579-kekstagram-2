@@ -2,12 +2,12 @@ import { pristine } from './validation-form.js'; // импорт данных в
 import { SCALE_PARAMETERS, onClickDownscaleButton, onClickUpscaleButton } from './scale-photo.js'; // импорт данных изменения масштаба превью
 import { onChangeEffect } from './add-effects.js'; // импорт данных работы фильтров
 import { setFormData } from './interaction-server.js'; // импорт функции отправки данных на сервер
-import { showErrorMessage } from './utils.js';
+import { showErrorMessage } from './utils.js'; // импорт функции показа сообщения об ошибке при выборе файла
 
 const ALLOWED_FILES = ['jpg', 'jpeg', 'png', 'svg', 'webp']; // разрешенные типы файлов для загрузки
 const NOT_ALLOWED_FILE = { // параметры сообщения при выборе неверного типа файла
-  TEXT: 'Выберите файл с изображением: jpg, png, svg или webp',
-  TIMEOUT: 4000
+  TEXT: `Выберите файл с изображением: ${ALLOWED_FILES.join(', ')}`,
+  TIMEOUT: 4500
 };
 const body = document.querySelector('body');
 const uploadImageForm = document.querySelector('.img-upload__form'); // форма загрузки фото
@@ -23,7 +23,8 @@ const hashtagsField = uploadImageForm.querySelector('.text__hashtags'); // по�
 const scaleControlSmaller = document.querySelector('.scale__control--smaller'); // кнопка уменьшения масштаба
 const scaleControlBigger = document.querySelector('.scale__control--bigger'); // кнопка увеличения масштаба
 
-const onSubmitForm = setFormData(onClickCanselButton); // для передачи в добавление и удаление обработчиков
+/* функция отправки формы для передачи в добавление и удаление обработчиков */
+const onSubmitForm = setFormData(onClickCanselButton);
 
 /* функция установки обработчиков на кнопки модалки формы */
 const setFormHandlers = () => {
@@ -34,7 +35,20 @@ const setFormHandlers = () => {
   effectsList.addEventListener('change', onChangeEffect); // обработчик выбора фильтра
 };
 
-function onClickCanselButton () { // функция закрытия формы
+/* функция закрытия окна по эскейпу */
+const onEscapeDown = (evt) => {
+  const errorMessage = document.querySelector('.error'); // ищем окно об ошибке загрузки фото
+  if (evt.key === 'Escape') {
+    if (document.activeElement === commentField || document.activeElement === hashtagsField || errorMessage) { // при фокусе на полях ввода или наличии сообщения об ошибке загрузки - отключаем закрытие по эскейп
+      evt.stopPropagation();
+    } else {
+      onClickCanselButton();
+    }
+  }
+};
+
+/* функция закрытия формы */
+function onClickCanselButton () {
   uploadImageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeDown); // снятие обработчика с эскейпа
@@ -49,18 +63,8 @@ function onClickCanselButton () { // функция закрытия формы
   effectLevelContainer.classList.add('hidden'); // скрытие слайдера
 }
 
-function onEscapeDown (evt) { // функция закрытия окна по эскейпу
-  const errorMessage = document.querySelector('.error'); // ищем окно об ошибке загрузки фото
-  if (evt.key === 'Escape') {
-    if (document.activeElement === commentField || document.activeElement === hashtagsField || errorMessage) { // при фокусе на полях ввода или наличии сообщения об ошибке загрузки - отключаем закрытие по эскейп
-      evt.stopPropagation();
-    } else {
-      onClickCanselButton();
-    }
-  }
-}
-
-const onChangeUploadInput = (evt) => { // функция открытия формы
+/* функция открытия формы */
+const onChangeUploadInput = (evt) => {
   uploadImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   const file = evt.target.files[0];
@@ -81,6 +85,7 @@ const onChangeUploadInput = (evt) => { // функция открытия фор
   document.addEventListener('keydown', onEscapeDown); // обработчик на эскейп
 };
 
+/* функция установки обработчика на загрузочный инпут формы */
 const onChangeImageInput = () => uploadImageInput.addEventListener('change', onChangeUploadInput);
 
 export { setFormHandlers, onChangeImageInput };
